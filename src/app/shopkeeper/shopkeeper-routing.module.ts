@@ -13,10 +13,10 @@ const routes: Routes = [
     component: ShopkeeperComponent,
     canActivate: [MustBeLoggedInGuard],
     children : [
-      { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: 'home', component: MainDashboardComponent },
       { path: 'products', component: ProductDashboardComponent },
-      { path: 'employees', component: EmployeeDashboardComponent }
+      { path: 'employees', component: EmployeeDashboardComponent },
+      { path: '', redirectTo: 'home', pathMatch: 'full' },
     ]
   },
   { path: 'chat', component: ChatComponent, canActivate: [MustBeLoggedInGuard] },
