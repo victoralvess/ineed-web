@@ -1,0 +1,49 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<div class="container">
+	<div class="row">
+		<div class="input-group">
+			<input class="form-control" type="text" name="search-products" placeholder="Pesquisar produtos">
+			<span class="input-group-btn">
+      	<button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+    	</span>    	
+    </div>
+    <select class="form-control" (change)="onChange($event.target.value)">
+	  	<option *ngFor="let store of stores" [value]="store">{{ store }}</option>
+	  </select>
+  </div>
+  <div class="row">  
+	  <div class="table-responsive" style="max-height: 300px;overflow-y: auto">
+	  	<table class="table table-striped">
+	  		<thead>
+	  			<tr>
+	  				<th>#</th>
+			    	<th>Produto</th>
+			    	<th><span class="material-icons">attach_money</span></th>
+			    	<th><span class="material-icons">thumb_up</span></th>
+			    	<th><span class="material-icons">thumb_down</span></th>
+			    	<th>Ações</th>
+			    </tr>
+		    </thead>	    
+		    <tbody>	    	
+		    	<tr *ngFor="let product of products | async">
+		    		<td>
+		    			<a href="/shopkeeper/dashboard/products/{{product.$key}}">
+		    				<span class="material-icons">edit</span>
+		    			</a>
+		    		</td>
+		    		<td>{{ product.name }}</td>
+		    		<td>{{ product.price }}</td>
+		    		<td>{{ product.upVotesCount }}</td>
+		    		<td>{{ product.downVotesCount }}</td>
+		    		<td>
+		    			<a href="/shopkeeper/dashboard/products/{{product.$key}}#delete">
+		    				<span class="material-icons">delete</span>
+		    			</a>
+		    		</td>
+		    	</tr>	 	    	
+		    </tbody>
+	  	</table>
+	  </div>
+	</div>
+</div>
+<button class="fab"><span class="material-icons">add</span></button>
