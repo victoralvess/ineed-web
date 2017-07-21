@@ -16,7 +16,6 @@
 	  	<table class="table table-striped">
 	  		<thead>
 	  			<tr>
-	  				<th>#</th>
 			    	<th>Produto</th>
 			    	<th><span class="material-icons">attach_money</span></th>
 			    	<th><span class="material-icons">thumb_up</span></th>
@@ -26,17 +25,15 @@
 		    </thead>	    
 		    <tbody>	    	
 		    	<tr *ngFor="let product of products | async">
-		    		<td>
-		    			<a href="/shopkeeper/dashboard/products/{{product.$key}}">
-		    				<span class="material-icons">edit</span>
-		    			</a>
-		    		</td>
 		    		<td>{{ product.name }}</td>
 		    		<td>{{ product.price }}</td>
 		    		<td>{{ product.upVotesCount }}</td>
 		    		<td>{{ product.downVotesCount }}</td>
 		    		<td>
-		    			<a href="/shopkeeper/dashboard/products/{{product.$key}}#delete">
+		    			<a href="/shopkeeper/dashboard/admin/products/edit/{{product.$key}}">
+		    				<span class="material-icons">edit</span>
+		    			</a>
+		    			<a href="/shopkeeper/dashboard/admin/products/delete/{{product.$key}}">
 		    				<span class="material-icons">delete</span>
 		    			</a>
 		    		</td>
@@ -46,4 +43,4 @@
 	  </div>
 	</div>
 </div>
-<button class="fab"><span class="material-icons">add</span></button>
+<button class="fab" (click)="addNewProduct()"><span class="material-icons">add</span></button>
