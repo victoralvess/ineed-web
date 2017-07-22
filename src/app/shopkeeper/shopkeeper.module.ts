@@ -16,6 +16,7 @@ import { AddComponent } from './dashboard/product-dashboard/add/add.component';
 import { EditComponent } from './dashboard/product-dashboard/edit/edit.component';
 import { DeleteComponent } from './dashboard/product-dashboard/delete/delete.component';
 import { ProductsService } from './dashboard/product-dashboard/services/products.service';
+import { SearchPipe } from './dashboard/product-dashboard/pipes/search.pipe';
 
 @NgModule({
   imports: [
@@ -24,17 +25,19 @@ import { ProductsService } from './dashboard/product-dashboard/services/products
     BsDropdownModule.forRoot(),
     HttpModule,
     FormsModule,
-    ReactiveFormsModule 
+    ReactiveFormsModule
   ],
   declarations: [
-      ChatComponent,
-      MainDashboardComponent,
-      ProductDashboardComponent,
-      ShopkeeperComponent,
-      EmployeeDashboardComponent,
-      AddComponent,
-      EditComponent,
-      DeleteComponent],
+    ChatComponent,
+    MainDashboardComponent,
+    ProductDashboardComponent,
+    ShopkeeperComponent,
+    EmployeeDashboardComponent,
+    AddComponent,
+    EditComponent,
+    DeleteComponent,
+    SearchPipe
+  ],
   exports: [ChatComponent],
   providers: [ProductsService]
 })

@@ -4,16 +4,16 @@
 	  <div class="form-group" [ngClass]="{'has-error':!productsForm.controls['name'].valid}">
 	    <label for="product-name">Produto:</label>
 	    <input type="text" class="form-control" id="product-name" placeholder="Como seus clientes verão o produto" [formControl]="productsForm.controls['name']">
-	    <div *ngIf="productsForm.controls['name'].hasError('required') && productsForm.controls['name'].touched" class="alert alert-danger">Seus clientes não podem achar um produto sem nome!</div>
-      <div *ngIf="productsForm.controls['name'].hasError('minlength') && productsForm.controls['name'].touched" class="alert alert-danger">O nome do produto deve ter, pelo menos, 3 caracteres.</div>
-      <div *ngIf="productsForm.controls['name'].hasError('maxlength') && productsForm.controls['name'].touched" class="alert alert-danger">O nome do produto deve ter, no máximo, 40 caracteres.</div> 	 	
+	    <aside *ngIf="productsForm.controls['name'].hasError('required') && productsForm.controls['name'].touched" class="alert alert-danger">Seus clientes não podem achar um produto sem nome!</aside>
+      <aside *ngIf="productsForm.controls['name'].hasError('minlength') && productsForm.controls['name'].touched" class="alert alert-danger">O nome do produto deve ter, pelo menos, 3 caracteres.</aside>
+      <aside *ngIf="productsForm.controls['name'].hasError('maxlength') && productsForm.controls['name'].touched" class="alert alert-danger">O nome do produto deve ter, no máximo, 40 caracteres.</aside> 	 	
 	  </div>
 	  <div class="form-group" [ngClass]="{'has-error':!productsForm.controls['description'].valid}">
 	    <label for="product-description">Descrição:</label>
 	    <textarea class="form-control" id="product-description" placeholder="Conte mais sobre o produto!" [formControl]="productsForm.controls['description']"></textarea>
-	    <div *ngIf="productsForm.controls['description'].hasError('required') && productsForm.controls['description'].touched" class="alert alert-danger">Seus clientes não podem achar um produto sem nome!</div>
-      <div *ngIf="productsForm.controls['description'].hasError('minlength') && productsForm.controls['description'].touched" class="alert alert-danger">O nome do produto deve ter, pelo menos, 15 caracteres.</div>
-      <div *ngIf="productsForm.controls['description'].hasError('maxlength') && productsForm.controls['description'].touched" class="alert alert-danger">O nome do produto deve ter, no máximo, 200 caracteres.</div>
+	    <aside *ngIf="productsForm.controls['description'].hasError('required') && productsForm.controls['description'].touched" class="alert alert-danger">Seus clientes querem saber mais sobre o produto!</aside>
+      <aside *ngIf="productsForm.controls['description'].hasError('minlength') && productsForm.controls['description'].touched" class="alert alert-danger">A descrição produto deve ter, pelo menos, 15 caracteres.</aside>
+      <aside *ngIf="productsForm.controls['description'].hasError('maxlength') && productsForm.controls['description'].touched" class="alert alert-danger">A descrição produto deve ter, no máximo, 200 caracteres.</aside>
 	  </div>
 	  <div class="form-group">
 	    <label for="product-price" [ngClass]="{'has-error':!productsForm.controls['price'].valid}">Preço:</label>
@@ -24,9 +24,9 @@
 	    <div *ngFor="let store of stores">
 	    	<input name="stores" type="checkbox" value="{{ store.id }}" [(ngModel)]="store.checked" [ngModelOptions]="{standalone: true}">	{{ store.id }}
 	    </div>	  
-	    <div *ngIf="!selectAtLeastOneStore" class="alert alert-danger">Onde será vendido? Escolha, ao menos, uma loja.</div> 	 	
+	    <aside *ngIf="!selectAtLeastOneStore" class="alert alert-danger">Onde será vendido? Escolha, ao menos, uma loja.</aside> 	 	
 	  </div>
-    <div *ngIf="whitespaceError" class="alert alert-danger">Boa tentativa, mas hoje não. Preencha os campos com caracteres válidos</div>
+    <aside *ngIf="whitespaceError" class="alert alert-danger">Boa tentativa, mas hoje não. Preencha os campos com caracteres válidos</aside>
 		<button class="btn" type="submit" [disabled]="!productsForm.valid">Adicionar</button>	  
   </form>
 </div>	 

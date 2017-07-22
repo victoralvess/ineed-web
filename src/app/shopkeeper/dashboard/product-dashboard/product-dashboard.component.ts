@@ -16,6 +16,7 @@ export class ProductDashboardComponent implements OnInit {
 	stores : any[];
 	products : FirebaseListObservable<any[]>;
 	user : firebase.User;
+  query : any;
 
   constructor(private router : Router, private productsService : ProductsService) { 
     productsService.getUser().subscribe((user) => {
