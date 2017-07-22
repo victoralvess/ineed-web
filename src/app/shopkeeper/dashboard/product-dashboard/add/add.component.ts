@@ -16,7 +16,7 @@ export class AddComponent implements OnInit {
   productsForm : FormGroup;
 	user : firebase.User;
 
-  constructor(public fb: FormBuilder, private productsService : ProductsService) { 
+  constructor(private fb: FormBuilder, private productsService : ProductsService) { 
 
   	this.productsForm = fb.group({
   		name : [null, Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(40)])],
@@ -51,7 +51,6 @@ export class AddComponent implements OnInit {
     console.log(data);
     if(data.name.trim().length < 3 || data.description.trim().length < 20) {
     	this.whitespaceError = true;
-    	console.log('hoje não, hoje não, hoje sim...');
     	return;
     } else {
     	this.whitespaceError = false;
@@ -65,7 +64,6 @@ export class AddComponent implements OnInit {
     }
 
     if(!this.selectAtLeastOneStore) {
-    	console.log('stores', 'no one');
     	return;
     }
 
@@ -73,13 +71,7 @@ export class AddComponent implements OnInit {
               		.filter(store => store.checked)
               		.map(store => store.id);
 
-    console.log('checked', this.stores
-              .filter(store => store.checked)
-              .map(store => store.id));
-
     this.productsService.addProduct(data);
-   // console.log(this.newProductForm.value);
-  //  console.log(this.newProductForm.controls['stores'].value);
   }
 
 }
