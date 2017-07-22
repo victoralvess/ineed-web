@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
-import { AuthService } from '../../../shared/services/services-auth/auth.service';
+import { FirebaseListObservable } from 'angularfire2/database';
+import { ProductsService } from './services/products.service';
+import { Router } from '@angular/router';
 
 import * as firebase from 'firebase';
 import 'rxjs/add/operator/map';
@@ -13,33 +14,25 @@ import 'rxjs/add/operator/map';
 export class ProductDashboardComponent implements OnInit {
 
 	stores : any[];
-	currentStore : any;
 	products : FirebaseListObservable<any[]>;
 	user : firebase.User;
 
-  constructor(private db : AngularFireDatabase, private auth : AuthService) { 
-
-  	this.user = firebase.auth().currentUser;
-  	db.object(`/users/${this.user.uid}`)
-  	.subscribe((user) => {
-  		this.stores = user.worksAt;
-  		this.getProductsFrom(this.stores[0]);
-  	});
-
+  constructor(private router : Router, private productsService : ProductsService) { 
+    productsService.getUser().subscribe((user) => {
+      this.stores = user.worksAt;
+      this.products = this.productsService.getProductsFrom(this.stores[0]);
+    });
   }
 
   ngOnInit() {
   }
 
-  getProductsFrom(thisStore) {
-		this.products = this.db.list(`/products/${thisStore}`, {
-
-		});
+  onChange(value) {
+  	this.products = this.productsService.getProductsFrom(value);
   }
 
-  onChange(value) {
-  	this.currentStore = value;
-  	this.getProductsFrom(this.currentStore);
+  addNewProduct() {
+    this.router.navigate(['/shopkeeper/dashboard/admin/products/add']);
   }
 
 }

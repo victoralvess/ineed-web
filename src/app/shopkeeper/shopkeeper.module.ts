@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { ShopkeeperRoutingModule } from './shopkeeper-routing.module';
 import { ChatComponent } from './chat/chat.component';
@@ -11,6 +12,10 @@ import { ProductDashboardComponent } from './dashboard/product-dashboard/product
 import { MainDashboardComponent } from './dashboard/main-dashboard/main-dashboard.component';
 
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { AddComponent } from './dashboard/product-dashboard/add/add.component';
+import { EditComponent } from './dashboard/product-dashboard/edit/edit.component';
+import { DeleteComponent } from './dashboard/product-dashboard/delete/delete.component';
+import { ProductsService } from './dashboard/product-dashboard/services/products.service';
 
 @NgModule({
   imports: [
@@ -19,14 +24,18 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
     BsDropdownModule.forRoot(),
     HttpModule,
     FormsModule,
+    ReactiveFormsModule 
   ],
   declarations: [
       ChatComponent,
       MainDashboardComponent,
       ProductDashboardComponent,
       ShopkeeperComponent,
-      EmployeeDashboardComponent],
+      EmployeeDashboardComponent,
+      AddComponent,
+      EditComponent,
+      DeleteComponent],
   exports: [ChatComponent],
-  providers: []
+  providers: [ProductsService]
 })
 export class ShopkeeperModule { }
