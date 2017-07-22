@@ -25,8 +25,15 @@ export class ProductsService {
 		});
   }
 
-/*  addProduct() {
-  	firebase.database().ref(`/products/`)
-  }*/
+  addProduct(product) {
+    product.stores.forEach((store) => {
+      firebase.database().ref(`/products/${store}`)
+      .push({
+        name : product.name,
+        description : product.description,
+        price : product.price
+      });
+    });  	
+  }
 
 }

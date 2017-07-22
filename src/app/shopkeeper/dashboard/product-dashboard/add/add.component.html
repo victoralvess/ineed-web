@@ -1,26 +1,32 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <div class="container">
- 	<form [formGroup]="newProductForm" (ngSubmit)="addNewProduct($event)" #form="ngForm">
-	  <div class="form-group">
+ 	<form [formGroup]="productsForm" (ngSubmit)="addNewProduct(productsForm.value)">
+	  <div class="form-group" [ngClass]="{'has-error':!productsForm.controls['name'].valid}">
 	    <label for="product-name">Produto:</label>
-	    <input formControlName="name" type="text" class="form-control" id="product-name" placeholder="Nome do Produto"  name="product-name">
+	    <input type="text" class="form-control" id="product-name" placeholder="Como seus clientes verão o produto" [formControl]="productsForm.controls['name']">
+	    <div *ngIf="productsForm.controls['name'].hasError('required') && productsForm.controls['name'].touched" class="alert alert-danger">Seus clientes não podem achar um produto sem nome!</div>
+      <div *ngIf="productsForm.controls['name'].hasError('minlength') && productsForm.controls['name'].touched" class="alert alert-danger">O nome do produto deve ter, pelo menos, 3 caracteres.</div>
+      <div *ngIf="productsForm.controls['name'].hasError('maxlength') && productsForm.controls['name'].touched" class="alert alert-danger">O nome do produto deve ter, no máximo, 40 caracteres.</div> 	 	
 	  </div>
-	  <div class="form-group">
+	  <div class="form-group" [ngClass]="{'has-error':!productsForm.controls['description'].valid}">
 	    <label for="product-description">Descrição:</label>
-	    <textarea formControlName="description" class="form-control" id="product-description" name="product-description"></textarea>
+	    <textarea class="form-control" id="product-description" placeholder="Conte mais sobre o produto!" [formControl]="productsForm.controls['description']"></textarea>
+	    <div *ngIf="productsForm.controls['description'].hasError('required') && productsForm.controls['description'].touched" class="alert alert-danger">Seus clientes não podem achar um produto sem nome!</div>
+      <div *ngIf="productsForm.controls['description'].hasError('minlength') && productsForm.controls['description'].touched" class="alert alert-danger">O nome do produto deve ter, pelo menos, 15 caracteres.</div>
+      <div *ngIf="productsForm.controls['description'].hasError('maxlength') && productsForm.controls['description'].touched" class="alert alert-danger">O nome do produto deve ter, no máximo, 200 caracteres.</div>
 	  </div>
 	  <div class="form-group">
-	    <label for="product-price">Preço:</label>
-	    <input formControlName="price" type="number" step="0.1" min="0.01" class="form-control" id="product-price" placeholder="Preço do Produto"  name="product-price">
+	    <label for="product-price" [ngClass]="{'has-error':!productsForm.controls['price'].valid}">Preço:</label>
+	    <input type="number" step="0.01" class="form-control" id="product-price" placeholder="Não enfie a faca!" [formControl]="productsForm.controls['price']">
 	  </div>
-	  <div class="form-group">
+	  <div class="form-group" [formGroup]="stores">
 	    <label for="product-stores">Vendido em:</label>
 	    <div *ngFor="let store of stores">
-	    	<input formControlName="store-{{store}}" type="checkbox" value="{{ store }}">	{{ store }}
-	    </div>	    
+	    	<input name="stores" type="checkbox" value="{{ store.id }}" [(ngModel)]="store.checked" [ngModelOptions]="{standalone: true}">	{{ store.id }}
+	    </div>	  
+	    <div *ngIf="!selectAtLeastOneStore" class="alert alert-danger">Onde será vendido? Escolha, ao menos, uma loja.</div> 	 	
 	  </div>
-		<button class="btn" type="submit">Adicionar</button>	  
+    <div *ngIf="whitespaceError" class="alert alert-danger">Boa tentativa, mas hoje não. Preencha os campos com caracteres válidos</div>
+		<button class="btn" type="submit" [disabled]="!productsForm.valid">Adicionar</button>	  
   </form>
 </div>	 
-
-<pre>{{ form.value | json }}</pre>

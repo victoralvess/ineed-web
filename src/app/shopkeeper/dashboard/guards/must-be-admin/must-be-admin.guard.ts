@@ -20,7 +20,7 @@ export class MustBeAdminGuard implements CanActivate {
     if (user != null) {
       return this.db.object(`users/${user.uid}`)
       .map((currentUser) => {
-        canActivate = (currentUser.permissionLevel == 3);
+        canActivate = (currentUser.permissionLevel == 2 || currentUser.permissionLevel == 3);
         if (!canActivate) {
           this.router.navigate(['/shopkeeper/dashboard/home']);
           return false;

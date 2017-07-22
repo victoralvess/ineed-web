@@ -2,7 +2,7 @@
 <div class="container">
 	<div class="row">
 		<div class="input-group">
-			<input class="form-control" type="text" name="search-products" placeholder="Pesquisar produtos">
+			<input class="form-control" type="text" name="search-products" placeholder="Pesquisar produtos" [(ngModel)]="query">
 			<span class="input-group-btn">
       	<button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
     	</span>    	
@@ -27,8 +27,8 @@
 		    	<tr *ngFor="let product of products | async">
 		    		<td>{{ product.name }}</td>
 		    		<td>{{ product.price }}</td>
-		    		<td>{{ product.upVotesCount }}</td>
-		    		<td>{{ product.downVotesCount }}</td>
+		    		<td>{{ product.upVotesCount || "0" }}</td>
+		    		<td>{{ product.downVotesCount || "0" }}</td>
 		    		<td>
 		    			<a href="/shopkeeper/dashboard/admin/products/edit/{{product.$key}}">
 		    				<span class="material-icons">edit</span>
