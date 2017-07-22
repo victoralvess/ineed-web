@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 
 import * as firebase from 'firebase';
 import 'rxjs/add/operator/map';
+import { PaginationInstance } from 'ngx-pagination';
 
 @Component({
   selector: 'app-product-dashboard',
@@ -17,6 +18,13 @@ export class ProductDashboardComponent implements OnInit {
 	products : FirebaseListObservable<any[]>;
 	user : firebase.User;
   query : any;
+  currentPage = 1;
+
+  public paginationComponentConfig: PaginationInstance = {
+    id: 'products-pagination',
+    itemsPerPage: 10,
+    currentPage: 1
+  };
 
   constructor(private router : Router, private productsService : ProductsService) { 
     productsService.getUser().subscribe((user) => {

@@ -13,3 +13,28 @@
 	background-color: #ff9626;
 	color: white;
 }
+
+.pagination {
+  display: flex;
+  max-width: 280px;
+  margin: auto;
+}
+
+.pagination>div {
+    flex: 1;
+    font-size: 18px;
+    text-align: center;
+    border-bottom: 3px solid transparent;
+}
+
+.pagination>div a {
+	color: #000;
+}
+
+.pagination>div a:hover {
+	text-decoration: none;
+}
+
+.pagination>div.current, .pagination>div:not(.disabled):hover {
+    border-color: #340054;
+}
