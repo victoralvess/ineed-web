@@ -17,7 +17,7 @@ import { VerifyAuth } from './shared/services/verify-auth/verify-auth';
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

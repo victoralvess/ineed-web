@@ -24,7 +24,7 @@
 			    </tr>
 		    </thead>	    
 		    <tbody>	    	
-		    	<tr *ngFor="let product of products | async">
+		    	<tr *ngFor="let product of products | async | search : query | paginate: paginationComponentConfig">
 		    		<td>{{ product.name }}</td>
 		    		<td>{{ product.price }}</td>
 		    		<td>{{ product.upVotesCount || "0" }}</td>
@@ -40,6 +40,28 @@
 		    	</tr>	 	    	
 		    </tbody>
 	  	</table>
+	  	<pagination-template #pagination="paginationApi"
+											     [id]="paginationComponentConfig.id"
+											     (pageChange)="paginationComponentConfig.currentPage = $event">
+		    <div class="pagination">
+		        <div class="pagination-previous" [class.disabled]="pagination.isFirstPage()">
+		            <a *ngIf="!pagination.isFirstPage()" (click)="pagination.previous()"><span class="material-icons">navigate_before</span></a>
+		        </div>
+
+		        <div *ngFor="let page of pagination.pages" [class.current]="pagination.getCurrent() === page.value">
+		            <a (click)="pagination.setCurrent(page.value)" *ngIf="pagination.getCurrent() !== page.value">
+		                <span>{{ page.label }}</span>
+		            </a>
+		            <div *ngIf="pagination.getCurrent() === page.value">
+		                <span>{{ page.label }}</span>
+		            </div>
+		        </div>
+
+		        <div class="pagination-next" [class.disabled]="pagination.isLastPage()">
+		            <a *ngIf="!pagination.isLastPage()" (click)="pagination.next()"><span class="material-icons">navigate_next</span></a>
+		        </div>
+		    </div>
+		  </pagination-template>	  	
 	  </div>
 	</div>
 </div>

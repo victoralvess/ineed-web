@@ -10,12 +10,13 @@ import { EmployeeDashboardComponent } from './dashboard/employee-dashboard/emplo
 import { ShopkeeperComponent } from './shopkeeper.component';
 import { ProductDashboardComponent } from './dashboard/product-dashboard/product-dashboard.component';
 import { MainDashboardComponent } from './dashboard/main-dashboard/main-dashboard.component';
-
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { AddComponent } from './dashboard/product-dashboard/add/add.component';
 import { EditComponent } from './dashboard/product-dashboard/edit/edit.component';
 import { DeleteComponent } from './dashboard/product-dashboard/delete/delete.component';
 import { ProductsService } from './dashboard/product-dashboard/services/products.service';
+import { SearchPipe } from './dashboard/product-dashboard/pipes/search.pipe';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   imports: [
@@ -24,17 +25,20 @@ import { ProductsService } from './dashboard/product-dashboard/services/products
     BsDropdownModule.forRoot(),
     HttpModule,
     FormsModule,
-    ReactiveFormsModule 
+    ReactiveFormsModule,
+    NgxPaginationModule
   ],
   declarations: [
-      ChatComponent,
-      MainDashboardComponent,
-      ProductDashboardComponent,
-      ShopkeeperComponent,
-      EmployeeDashboardComponent,
-      AddComponent,
-      EditComponent,
-      DeleteComponent],
+    ChatComponent,
+    MainDashboardComponent,
+    ProductDashboardComponent,
+    ShopkeeperComponent,
+    EmployeeDashboardComponent,
+    AddComponent,
+    EditComponent,
+    DeleteComponent,
+    SearchPipe
+  ],
   exports: [ChatComponent],
   providers: [ProductsService]
 })
