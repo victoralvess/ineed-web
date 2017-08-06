@@ -1,4 +1,4 @@
-<div class="container-fluid display-table">
+<div class="container-fluid display-table abs">
   <div class="row display-table-row">
 
     <!-- Menu lateral -->
@@ -11,6 +11,30 @@
             <a>
               <i class="fa fa-home"></i>
               <span class="hidden-xs hidden-sm">Home</span>
+            </a>
+          </li>
+          <li [routerLink]="['/shopkeeper/dashboard/admin/products']" routerLinkActive="active">
+            <a>
+              <i class="fa fa-product-hunt"></i>
+              <span class="hidden-xs hidden-sm">Produtos</span>
+            </a>
+          </li>
+          <li [routerLink]="['/shopkeeper/dashboard/admin/employees']" routerLinkActive="active">
+            <a>
+              <i class="fa fa-users"></i>
+              <span class="hidden-xs hidden-sm">Funcionários</span>
+            </a>
+          </li>
+          <li [routerLink]="['/shopkeeper/dashboard/admin/stores']" routerLinkActive="active">
+            <a>
+              <i class="fa fa-map-marker"></i>
+              <span class="hidden-xs hidden-sm">Lojas</span>
+            </a>
+          </li>
+          <li [routerLink]="['/shopkeeper/chat']" routerLinkActive="active">
+            <a>
+              <i class="fa fa-comments-o"></i>
+              <span class="hidden-xs hidden-sm">Chat</span>
             </a>
           </li>
         </ul>
@@ -47,7 +71,7 @@
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     <img
-                      src="http://www.loto-facil.biz/wp-content/uploads/2014/08/QUINA-JOGO-matematica-x-loterias-matematica-x-loterias-2-mega-sena-quina-lotof-acil-lotomania-IMAGEM-200x200-1.png"
+                      [src]="user.photoURL"
                       alt="user" class="circle-logo">
                     <b class="caret"></b></a>
                   <ul class="dropdown-menu">
@@ -83,4 +107,3 @@
     </div>
   </div>
 </div>
-

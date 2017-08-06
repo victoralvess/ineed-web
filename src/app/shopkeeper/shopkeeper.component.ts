@@ -5,7 +5,6 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { AuthService } from '../shared/services/services-auth/auth.service';
 import * as $ from 'jquery';
 
-
 @Component({
   selector: 'app-shopkeeper',
   templateUrl: './shopkeeper.component.html',
@@ -18,7 +17,6 @@ export class ShopkeeperComponent implements OnInit, AfterViewInit {
 
   constructor(private afAuth: AngularFireAuth, private service: AuthService, private router: Router) {
     this.user = afAuth.auth.currentUser;
-
   }
 
 

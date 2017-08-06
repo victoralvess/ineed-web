@@ -1,9 +1,9 @@
-import {Component, ElementRef, Renderer, ViewChild, OnInit, HostListener} from '@angular/core';
-import {Http} from '@angular/http';
+import { Component, ElementRef, Renderer, ViewChild, OnInit, HostListener } from '@angular/core';
+import { Http } from '@angular/http';
 
-import {AngularFireDatabase, FirebaseListObservable} from 'angularfire2/database';
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import 'rxjs/add/operator/map';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
 
 import * as firebase from 'firebase/app';
 import { Message } from '../../shared/classes/message';
@@ -28,7 +28,6 @@ export class ChatComponent implements OnInit {
     @ViewChild('container') private erContainer: ElementRef;
     @ViewChild('stackWrap') private erStackWrap: ElementRef;
     @ViewChild('contacts') private erContacts: ElementRef;
-    @ViewChild('messageInput') private erInput: ElementRef;
     screenIsSmall = false;
 
     @HostListener('window:resize')
@@ -67,8 +66,7 @@ export class ChatComponent implements OnInit {
                 this.messagesAreLoading = false;
             }, 1000);
         });
-    }//906daa8eee4177398bbec6fd42214c63fed65d19
-
+    }
 
     adaptChatToScreen(width: number) {
         if (!this.screenIsSmall && width < 600) {
@@ -108,5 +106,4 @@ export class ChatComponent implements OnInit {
             this.erScrollable.nativeElement.scrollHeight
         );
     }
-
 }

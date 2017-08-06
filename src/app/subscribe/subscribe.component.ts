@@ -15,6 +15,4 @@ export class SubscribeComponent implements OnInit {
   ngOnInit() {
   }
 
- 
-
 }

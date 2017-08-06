@@ -1,6 +1,6 @@
 import { TestBed, async, inject } from '@angular/core/testing';
-import { MustBeLoggedInGuard } from './must-be-logged-in.guard';
 
+import { MustBeLoggedInGuard } from './must-be-logged-in.guard';
 
 describe('MustBeLoggedInGuard', () => {
   beforeEach(() => {
