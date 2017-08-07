@@ -1,10 +1,10 @@
-import { INeedPage } from './app.po';
+import { INeedWebProjectPage } from './app.po';
 
-describe('i-need App', () => {
-  let page: INeedPage;
+describe('i-need-web-project App', () => {
+  let page: INeedWebProjectPage;
 
   beforeEach(() => {
-    page = new INeedPage();
+    page = new INeedWebProjectPage();
   });
 
   it('should display welcome message', () => {
