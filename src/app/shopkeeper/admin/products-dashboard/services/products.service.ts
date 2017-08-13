@@ -43,8 +43,8 @@ export class ProductsService {
 
       let key = firebase.database().ref(`/products`).push(newProduct).key;   
       firebase.database().ref(`/products-stores/${store}/${key}`).set(newProduct);
-      this.setCategories(product, store, key);      
-         
+      this.setCategories(product, store, key);     
+      this.uploadImages(key, product.images, store);
     });  	
   }
 
@@ -77,6 +77,23 @@ export class ProductsService {
 
   getCategoriesFrom(product) {
     return Object.keys(product.categories);
+  }
+
+  uploadImages(key: any, files : any[], store : any) {
+    files.forEach((file) => {
+      let byteString = atob(file.src.split(',')[1]);
+      let mimeString = file.src.split(',')[0].split(':')[1].split(';')[0]
+
+      let arrayBuffer = new ArrayBuffer(byteString.length);
+      let uInt8Array = new Uint8Array(arrayBuffer);
+      for (let i = 0; i < byteString.length; i++) {
+          uInt8Array[i] = byteString.charCodeAt(i);
+      }
+
+      let blob = new Blob([arrayBuffer]);
+      let ext = mimeString.split('/')[1];
+      firebase.storage().ref(`${store}/${key}.${ext}`).put(blob);   
+    });      
   }
 
 }
