@@ -26,6 +26,7 @@ export class EditProductsComponent implements OnInit {
   picsLimit = 5;
   savedPicsQty = 0;
   filesFromImageUpload = [];  
+  filesFromImageUploadAux = [];
 
   constructor(private fb: FormBuilder, private productsService : ProductsService, private activatedRoute: ActivatedRoute, private router : Router) { 
 
@@ -96,9 +97,14 @@ export class EditProductsComponent implements OnInit {
     data.productStore = this.productStore;
     data.images = [];
 
+    while(this.filesFromImageUpload.length > this.upToLimitPics){
+        this.filesFromImageUploadAux.splice(this.filesFromImageUpload.length - 1, 1);
+    }
+    
+
     if(this.picsArray.length > 0) {
       data.images = this.picsArray;
-    } else if(this.removedImages.length == this.savedPicsQty) {
+    } else if((this.removedImages.length == this.savedPicsQty) && !(this.filesFromImageUpload.length > 0)) {
       alert('O produto precisa de, pelo menos, 1 imagem. As imagens atuais NÃO foram alteradas');
       data.images = this.removedImages;
     }
@@ -123,8 +129,17 @@ export class EditProductsComponent implements OnInit {
       this.removedImages.splice(this.removedImages.indexOf(image.$value), 1);
       this.picsArray.push(image.$value);
       this.upToLimitPics--;
+      /*if(this.filesFromImageUpload.length > this.upToLimitPics) {
+        console.log('maior', 'é maior');
+        this.filesFromImageUploadAux = this.filesFromImageUpload;
+        console.log('maior', this.filesFromImageUploadAux);
+        while(this.filesFromImageUploadAux.length > this.upToLimitPics){
+          this.filesFromImageUploadAux.splice(this.filesFromImageUploadAux.length - 1, 1);
+        }        
+        console.log('maior', this.filesFromImageUploadAux);
+      }*/
     }    
-
+    console.log('uptoLimit', this.upToLimitPics);
     this.hasLessThanLimit = (this.upToLimitPics > 0);
   }
 
@@ -143,11 +158,16 @@ export class EditProductsComponent implements OnInit {
       return;
     }
     console.log('toRemove', file.src);
+    
     this.filesFromImageUpload.push(file.src);  
+   // this.upToLimitPics -= 2;
+    console.log('uptoLimit', this.upToLimitPics);
   }
 
-  imageRemoved(file) {
+  imageRemoved(file) {    
     this.filesFromImageUpload.splice(this.filesFromImageUpload.indexOf(file.src), 1);
+   // this.upToLimitPics += 2;
+    console.log('uptoLimit', this.upToLimitPics);
   }
 
   uploadStateChange(state: boolean) {
