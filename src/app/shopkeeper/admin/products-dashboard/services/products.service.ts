@@ -24,10 +24,6 @@ export class ProductsService {
   }
 
   getProductsFrom(thisStore, params?) {
-    let a = this.db.list(`/products-categories/food`);  
-    a.subscribe((values) => {
-      console.log('list121', values);
-    });
 		return this.db.list(`/products-stores/${thisStore}`, {
       query : params || {
         orderByChild: 'name'
