@@ -95,7 +95,7 @@ export class AddProductsComponent implements OnInit {
     }
 
     data.images = this.files;
-    console.log(this.files);
+    console.log(this.stores);
     data.stores = this.stores
               		.filter(store => store.checked)
               		.map(store => store.id);

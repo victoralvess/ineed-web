@@ -47,7 +47,7 @@ export class ProductsDashboardComponent implements OnInit {
     this.router.navigate(['/shopkeeper/dashboard/admin/products/add']);
   }
 
-  deleteProduct(key, store) {
+  deleteProduct(key, categories, store) {
     const deleteModal = this.modal.confirm()
                       .size('lg')
                       .showClose(false)
@@ -67,7 +67,7 @@ export class ProductsDashboardComponent implements OnInit {
     deleteModal.then((dialogRef) => {
       dialogRef.result.then((result) => {
         if(result) {
-          this.productsService.deleteProduct(key, store);
+          this.productsService.deleteProduct(key, categories, store);
         }
       });
     });

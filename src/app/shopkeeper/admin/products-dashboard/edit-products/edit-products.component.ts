@@ -64,6 +64,7 @@ export class EditProductsComponent implements OnInit {
         this.hasLessThanLimit = (this.savedPicsQty < this.picsLimit);
 
         this.productStore = foundProduct.store;
+        console.log('stoooooooooooore',foundProduct.store);
   			this.productsForm = fb.group({
 		  		name : [foundProduct.name, Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(40)])],
 		  		description: [foundProduct.description, Validators.compose([Validators.required, Validators.minLength(20), Validators.maxLength(200)])],
@@ -119,8 +120,7 @@ export class EditProductsComponent implements OnInit {
   }
  
   removeImage(image) {
-    let key = image.$key;
-
+    
     if(this.toggleRemoveOverlay(image)) {
       this.removedImages.push(image.$value);
       this.picsArray.splice(this.picsArray.indexOf(image.$value), 1);
@@ -129,15 +129,6 @@ export class EditProductsComponent implements OnInit {
       this.removedImages.splice(this.removedImages.indexOf(image.$value), 1);
       this.picsArray.push(image.$value);
       this.upToLimitPics--;
-      /*if(this.filesFromImageUpload.length > this.upToLimitPics) {
-        console.log('maior', 'é maior');
-        this.filesFromImageUploadAux = this.filesFromImageUpload;
-        console.log('maior', this.filesFromImageUploadAux);
-        while(this.filesFromImageUploadAux.length > this.upToLimitPics){
-          this.filesFromImageUploadAux.splice(this.filesFromImageUploadAux.length - 1, 1);
-        }        
-        console.log('maior', this.filesFromImageUploadAux);
-      }*/
     }    
     console.log('uptoLimit', this.upToLimitPics);
     this.hasLessThanLimit = (this.upToLimitPics > 0);
@@ -160,13 +151,11 @@ export class EditProductsComponent implements OnInit {
     console.log('toRemove', file.src);
     
     this.filesFromImageUpload.push(file.src);  
-   // this.upToLimitPics -= 2;
     console.log('uptoLimit', this.upToLimitPics);
   }
 
   imageRemoved(file) {    
     this.filesFromImageUpload.splice(this.filesFromImageUpload.indexOf(file.src), 1);
-   // this.upToLimitPics += 2;
     console.log('uptoLimit', this.upToLimitPics);
   }
 
