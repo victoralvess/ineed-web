@@ -21,6 +21,9 @@ export class ProductsDashboardComponent implements OnInit {
 	user : firebase.User;
   query : any;
   currentPage = 1;
+  userSubscription;
+  productsSubscription;
+  lastSelected;
   
   public paginationComponentConfig: PaginationInstance = {
     id: 'products-pagination',
@@ -29,17 +32,25 @@ export class ProductsDashboardComponent implements OnInit {
   };
 
   constructor(private router : Router, private productsService : ProductsService, private modal : Modal) { 
-    productsService.getUser().subscribe((user) => {
+    this.userSubscription = productsService.getUser().subscribe((user) => {
       this.stores = user.worksAt;
+      this.lastSelected = this.stores[0];
       this.products = this.productsService.getProductsFrom(this.stores[0]);
-      this.productsService.getProductsFrom(this.stores[0]).subscribe(store => console.log(store));
+      this.productsSubscription = this.productsService.getProductsFrom(this.stores[0]).subscribe(store => console.log(store));
     });
   } 
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
+
+  ngOnDestroy() {
+    console.log('onDestroy');
+    this.products.subscribe().unsubscribe();
+    this.userSubscription.unsubscribe();
+    this.productsSubscription.unsubscribe();
+  }  
 
   onChange(value) {
+    this.lastSelected = value;
   	this.products = this.productsService.getProductsFrom(value);
   }
 
@@ -69,6 +80,8 @@ export class ProductsDashboardComponent implements OnInit {
         if(result) {
           this.productsService.deleteProduct(key, categories, store);
         }
+      }).catch((err) => {
+        
       });
     });
     

@@ -27,6 +27,10 @@ export class EditProductsComponent implements OnInit {
   savedPicsQty = 0;
   filesFromImageUpload = [];  
   filesFromImageUploadAux = [];
+  activatedRouteSubscription;
+  productsSubscription;
+  categoriesSubscription;
+  products;
 
   constructor(private fb: FormBuilder, private productsService : ProductsService, private activatedRoute: ActivatedRoute, private router : Router) { 
 
@@ -49,11 +53,12 @@ export class EditProductsComponent implements OnInit {
         return value;
     });
 
-    this.activatedRoute.params.subscribe((params: Params) => {
+    this.activatedRouteSubscription = this.activatedRoute.params.subscribe((params: Params) => {
 
       this.productId = params['productId'];
 
-  		this.productsService.db.object(`products/${this.productId}`)
+  		this.products = this.productsService.db.object(`products/${this.productId}`);
+      this.productsSubscription = this.products
       .subscribe((foundProduct) => {
 
         this.picsArray = foundProduct.pictures;
@@ -73,7 +78,7 @@ export class EditProductsComponent implements OnInit {
 		    });
   		});
 
-      productsService.getAllCategories().subscribe((category) => {
+      this.categoriesSubscription = productsService.getAllCategories().subscribe((category) => {
         let auxArray = [];
         category.forEach(cat => {
           auxArray.push({ label : cat.value, value : cat.$key });
@@ -84,6 +89,13 @@ export class EditProductsComponent implements OnInit {
   }
 
   ngOnInit() { }
+
+  ngOnDestroy() {
+    console.log('onDestroy');
+    this.activatedRouteSubscription.unsubscribe();
+    this.productsSubscription.unsubscribe();
+    this.categoriesSubscription.unsubscribe();
+  }  
 
   updateProduct(data) {
   	
