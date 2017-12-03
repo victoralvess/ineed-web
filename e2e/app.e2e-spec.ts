@@ -1,14 +1,14 @@
-import { INeedWebProjectPage } from './app.po';
+import { AppPage } from './app.po';
 
-describe('i-need-web-project App', () => {
-  let page: INeedWebProjectPage;
+describe('ineed-stores-module App', () => {
+  let page: AppPage;
 
   beforeEach(() => {
-    page = new INeedWebProjectPage();
+    page = new AppPage();
   });
 
   it('should display welcome message', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('Welcome to app!!');
+    expect(page.getParagraphText()).toEqual('Welcome to app!');
   });
 });

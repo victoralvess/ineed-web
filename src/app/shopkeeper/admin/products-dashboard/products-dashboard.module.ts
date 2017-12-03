@@ -8,34 +8,103 @@ import { ProductsDashboardRoutingModule } from './products-dashboard-routing.mod
 import { ProductsDashboardComponent } from './products-dashboard.component';
 import { AddProductsComponent } from './add-products/add-products.component';
 import { EditProductsComponent } from './edit-products/edit-products.component';
-import { SearchPipe } from '../../../shared/pipes/search.pipe';
 import { ProductsService } from './services/products.service';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-import { NgxPaginationModule } from 'ngx-pagination'; 
+import { NgxPaginationModule } from 'ngx-pagination';
 import { MultiSelectModule, GrowlModule } from 'primeng/primeng';
 import { ImageUploadModule } from 'angular2-image-upload';
 
 import { ModalModule } from 'ngx-modialog';
-import { BootstrapModalModule } from 'ngx-modialog/plugins/bootstrap';
 
+import { NotificationsService } from '../../../shared/services/notifications/notifications.service';
+import { CrudService } from '../../../shared/services/crud-service/crud.service';
+import { CovalentDialogsModule } from '@covalent/core';
+import { NoConflictStyleCompatibilityMode, CompatibilityModule } from '@angular/material';
+import {
+  MatAutocompleteModule,
+  MatButtonModule,
+  MatButtonToggleModule,
+  MatCardModule,
+  MatCheckboxModule,
+  MatChipsModule,
+  MatDatepickerModule,
+  MatDialogModule,
+  MatExpansionModule,
+  MatGridListModule,
+  MatIconModule,
+  MatInputModule,
+  MatListModule,
+  MatMenuModule,
+  MatNativeDateModule,
+  MatPaginatorModule,
+  MatProgressBarModule,
+  MatProgressSpinnerModule,
+  MatRadioModule,
+  MatRippleModule,
+  MatSelectModule,
+  MatSidenavModule,
+  MatSliderModule,
+  MatSlideToggleModule,
+  MatSnackBarModule,
+  MatSortModule,
+  MatTableModule,
+  MatTabsModule,
+  MatToolbarModule,
+  MatTooltipModule,
+  MatStepperModule
+} from '@angular/material';
+import { FlexLayoutModule } from '@angular/flex-layout';
 @NgModule({
   imports: [
+    FlexLayoutModule,
     CommonModule,
     HttpModule,
     FormsModule,
     ReactiveFormsModule,
     BsDropdownModule.forRoot(),
-		NgxPaginationModule,
+    NgxPaginationModule,
     ProductsDashboardRoutingModule,
     MultiSelectModule,
     GrowlModule,
     ImageUploadModule.forRoot(),
     ModalModule.forRoot(),
-    BootstrapModalModule
+    CovalentDialogsModule,
+    NoConflictStyleCompatibilityMode,
+    CompatibilityModule,
+    MatAutocompleteModule,
+    MatButtonModule,
+    MatButtonToggleModule,
+    MatCardModule,
+    MatCheckboxModule,
+    MatChipsModule,
+    MatDatepickerModule,
+    MatDialogModule,
+    MatExpansionModule,
+    MatGridListModule,
+    MatIconModule,
+    MatInputModule,
+    MatListModule,
+    MatMenuModule,
+    MatNativeDateModule,
+    MatPaginatorModule,
+    MatProgressBarModule,
+    MatProgressSpinnerModule,
+    MatRadioModule,
+    MatRippleModule,
+    MatSelectModule,
+    MatSidenavModule,
+    MatSliderModule,
+    MatSlideToggleModule,
+    MatSnackBarModule,
+    MatSortModule,
+    MatTableModule,
+    MatTabsModule,
+    MatToolbarModule,
+    MatTooltipModule,
+    MatStepperModule
   ],
-  declarations: [SearchPipe, ProductsDashboardComponent, AddProductsComponent, EditProductsComponent],
-  exports: [SearchPipe, ProductsDashboardComponent, AddProductsComponent, EditProductsComponent],
-  providers: [ProductsService] 
+  declarations: [ProductsDashboardComponent, AddProductsComponent, EditProductsComponent],
+  exports: [ProductsDashboardComponent, AddProductsComponent, EditProductsComponent],
+  providers: [ProductsService, NotificationsService, CrudService]
 })
 export class ProductsDashboardModule { }
- 

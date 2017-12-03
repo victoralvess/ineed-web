@@ -1,89 +1,94 @@
-import { Component, OnInit } from '@angular/core';
-import { FirebaseListObservable } from 'angularfire2/database';
+import { Component } from '@angular/core';
 import { ProductsService } from './services/products.service';
+
+import { AngularFireAuth } from 'angularfire2/auth';
+
+import { User } from 'firebase/app';
+
+import { Subject } from 'rxjs/Subject';
+import { ViewContainerRef } from '@angular/core';
+import { TdDialogService } from '@covalent/core';
 import { Router } from '@angular/router';
-
-import * as firebase from 'firebase';
-import 'rxjs/add/operator/map';
-import { PaginationInstance } from 'ngx-pagination';
-
-import { Modal } from 'ngx-modialog/plugins/bootstrap';
+import { DataSource } from '@angular/cdk/collections';
+import { Observable } from 'rxjs/Observable';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-products-dashboard',
   templateUrl: './products-dashboard.component.html',
   styleUrls: ['./products-dashboard.component.css']
 })
-export class ProductsDashboardComponent implements OnInit {
+export class ProductsDashboardComponent {
 
-	stores : any[];
-	products : FirebaseListObservable<any[]>;
-	user : firebase.User;
-  query : any;
-  currentPage = 1;
+  stores: any[];
+  user: User;
   userSubscription;
-  productsSubscription;
   lastSelected;
-  
-  public paginationComponentConfig: PaginationInstance = {
-    id: 'products-pagination',
-    itemsPerPage: 10,
-    currentPage: 1
-  };
+  products$ = new Subject<string>();
+  displayedColumns = ['name', 'price', 'upVotes', 'downVotes', 'actions'];
+  dataSource: ProductsDataSource;
 
-  constructor(private router : Router, private productsService : ProductsService, private modal : Modal) { 
-    this.userSubscription = productsService.getUser().subscribe((user) => {
-      this.stores = user.worksAt;
-      this.lastSelected = this.stores[0];
-      this.products = this.productsService.getProductsFrom(this.stores[0]);
-      this.productsSubscription = this.productsService.getProductsFrom(this.stores[0]).subscribe(store => console.log(store));
+  constructor(public snackBar: MatSnackBar, private productsService: ProductsService, private afAuth: AngularFireAuth, private dialogService: TdDialogService,
+              private viewContainerRef: ViewContainerRef, private router: Router) {
+
+    this.products$.asObservable().subscribe((storeId) => {
+      this.dataSource = new ProductsDataSource(productsService, storeId);
     });
-  } 
 
-  ngOnInit() { }
+    this.userSubscription = productsService.getStoresWhereUserWorks().subscribe((stores) => {
+      this.stores = stores;
+      this.lastSelected = this.stores[0].$key;
+      this.products$.next(this.lastSelected);
+    });
 
-  ngOnDestroy() {
-    console.log('onDestroy');
-    this.products.subscribe().unsubscribe();
-    this.userSubscription.unsubscribe();
-    this.productsSubscription.unsubscribe();
-  }  
+
+    this.afAuth.auth.onAuthStateChanged((user) => {
+      if (!user) {
+        console.log('destrói tuto chessus');
+        this.userSubscription.unsubscribe();
+        this.products$.unsubscribe();
+      }
+    });
+  }
 
   onChange(value) {
     this.lastSelected = value;
-  	this.products = this.productsService.getProductsFrom(value);
+    this.products$.next(this.lastSelected);
   }
 
-  addNewProduct() {
-    this.router.navigate(['/shopkeeper/dashboard/admin/products/add']);
-  }
-
-  deleteProduct(key, categories, store) {
-    const deleteModal = this.modal.confirm()
-                      .size('lg')
-                      .showClose(false)
-                      .keyboard(27)
-                      .title('Excluir dados')
-                      .body(`
-                          <div class="alert alert-danger">
-                            <b><span class="material-icons">warning</span> O produto será excluído (permanentemente).</b>
-                          </div>
-                          <p>Você realmente deseja excluir este produto?</p>
-                          `)
-                      .cancelBtn('CANCELAR')
-                      .okBtn('EXCLUIR')
-                      .okBtnClass('btn btn-danger')
-                      .open();
-
-    deleteModal.then((dialogRef) => {
-      dialogRef.result.then((result) => {
-        if(result) {
-          this.productsService.deleteProduct(key, categories, store);
-        }
-      }).catch((err) => {
-        
-      });
+  deleteProduct(key, categories, store, picsQty) {
+    this.dialogService.openConfirm({
+      message: `Você realmente deseja excluir este produto?`,
+      disableClose: true,
+      viewContainerRef: this.viewContainerRef,
+      title: '',
+      cancelButton: 'Cancelar',
+      acceptButton: 'Excluir',
+    }).afterClosed().subscribe((accept: boolean) => {
+      if (accept) {
+        this.productsService.deleteProduct(key, categories, store, picsQty);
+        this.snackBar.open('Excluído', 'ENTENDI', {
+          duration: 5000
+        });
+      }
     });
-    
+  }
+
+  updateProduct(key) {
+    this.router.navigate([`/shopkeeper/dashboard/admin/products/edit/${key}`]);
+  }
+}
+
+export class ProductsDataSource extends DataSource<any> {
+
+  constructor(private productsService: ProductsService, private storeId) {
+    super();
+  }
+
+  connect(): Observable<any[]> {
+    return this.productsService.getProductsFrom(this.storeId);
+  }
+
+  disconnect() {
   }
 }

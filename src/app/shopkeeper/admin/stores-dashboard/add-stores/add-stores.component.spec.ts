@@ -19,7 +19,11 @@ describe('AddStoresComponent', () => {
     fixture.detectChanges();
   });
 
+<<<<<<< HEAD
   it('should be created', () => {
+=======
+  it('should create', () => {
+>>>>>>> stores-module
     expect(component).toBeTruthy();
   });
 });

@@ -1,37 +1,57 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Shopkeeper } from '../../shared/classes/shopkeeper';
+import { Shopkeeper } from '../../shared/models/shopkeeper.model';
 import { AuthService } from '../../shared/services/services-auth/auth.service';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+
 
 @Component({
-    selector: 'app-password-forgot',
-    templateUrl: './password-forgot.component.html',
-    styleUrls: ['./password-forgot.component.css']
+  selector: 'app-password-forgot',
+  templateUrl: './password-forgot.component.html',
+  styleUrls: ['./password-forgot.component.css']
 })
 export class PasswordForgotComponent implements OnInit {
 
-    shopkeeper: Shopkeeper;
-    btnLoading: boolean = false;
-    shopkeeperLoggedStatus: boolean = true;
+  shopkeeper: Shopkeeper;
+  btnLoading = false;
+  shopkeeperLoggedStatus = true;
 
-    constructor(private authService: AuthService, private router: Router) {
-        this.shopkeeper = new Shopkeeper();
-    }
+  recoverPasswdForm = new FormGroup({
+    email: new FormControl('', Validators.compose([Validators.required, Validators.email]))
+  });
 
-    ngOnInit() {
-    }
+  constructor(private authService: AuthService, private router: Router) {
+  }
 
-    onClickForgot() {
-        this.btnLoading = true;
-        this.authService.forgotPassword(this.shopkeeper);
-        this.authService.shopkeeperLogged.subscribe(result => {
-            console.log(result);
-            this.btnLoading = result;
-            this.shopkeeperLoggedStatus = result;
-            if (result) {
-                this.router.navigate(['/subscribe/signin']);
-            }
-        });
-    }
+  ngOnInit() {
+  }
+
+  onClickForgot() {
+    this.btnLoading = true;
+    this.authService.forgotPassword(this.shopkeeper);
+    this.authService.shopkeeperLogged.subscribe(result => {
+      console.log(result);
+      this.btnLoading = result;
+      this.shopkeeperLoggedStatus = result;
+      if (result) {
+        this.router.navigate(['/subscribe/signin']);
+      }
+    });
+  }
+
+  recoverPasswd(formValue) {
+    console.log(formValue);
+    this.shopkeeper = {email: formValue.email};
+    this.btnLoading = true;
+    this.authService.forgotPassword(this.shopkeeper);
+    this.authService.shopkeeperLogged.subscribe(result => {
+      console.log(result);
+      this.btnLoading = result;
+      this.shopkeeperLoggedStatus = result;
+      if (result) {
+        this.router.navigate(['/subscribe/signin']);
+      }
+    });
+  }
 }

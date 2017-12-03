@@ -1,137 +1,126 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ProductsService } from '../services/products.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { SelectItem } from 'primeng/primeng';
 
-import { Message } from 'primeng/primeng';
-import * as firebase from 'firebase';
+import { User } from 'firebase/app';
+import { Store } from '../../../models/store.model';
+import { Category } from '../../../models/category.model';
+import { CustomValidators } from '../../../../shared/validators/custom-validators';
+import { MatSnackBar } from '@angular/material';
 
-@Component({ 
+@Component({
   selector: 'app-add-products',
   templateUrl: './add-products.component.html',
   styleUrls: ['./add-products.component.css']
 })
-export class AddProductsComponent implements OnInit {
-  stores = [];
-  categories: SelectItem[];
-  
-  selectAtLeastOneStore : boolean = true; 
-  whitespaceError : boolean = false;
-  productsForm : FormGroup;
-  storesGroup : FormGroup;
-	user : firebase.User;
-  selectedCategories: any[];
+export class AddProductsComponent implements OnInit, OnDestroy {
+
+  stores: Store[] = [];
+  categories: SelectItem[] = [];
+
+  productsForm: FormGroup;
+  user: User;
+  selectedCategories: FormControl[];
   files = [];
-  growlMessages : Message[] = [];
 
   userSubscription;
   categoriesSubscription;
+  isLoading = false;
 
-  constructor(private fb: FormBuilder, private productsService : ProductsService) { 
-  	this.productsForm = new FormGroup({
-  		name : new FormControl('', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(40)])),
-  		description: new FormControl('', Validators.compose([Validators.required, Validators.minLength(20), Validators.maxLength(200)])),
-  		price: new FormControl('', Validators.required),
-      selectedCategories: new FormControl([], Validators.required)
+  constructor(public snackBar: MatSnackBar, private fb: FormBuilder, private productsService: ProductsService) {
+    this.productsForm = new FormGroup({
+      name: new FormControl('', Validators.compose([Validators.required, CustomValidators.minLength(3), CustomValidators.maxLength(40)])),
+      description: new FormControl('', Validators.compose([Validators.required, CustomValidators.minLength(20), CustomValidators.maxLength(200)])),
+      price: new FormControl('', Validators.required),
+      selectedCategories: new FormControl([], Validators.required),
+      stores: new FormControl([], Validators.required),
     });
 
-    this.storesGroup = new FormGroup({
-      storesList: new FormControl('')
-    });
-
-    this.productsForm.valueChanges
-    .map((value) => {
-        value.name = value.name.trim();
-        value.description = value.description.trim();
-        if(value.name.length < 3 || value.description.length < 20) {
-          this.whitespaceError = true;
-        } else {
-          this.whitespaceError = false;
-        } 
-        return value;
-    });
- 
-    this.userSubscription = productsService.getUser().subscribe((user) => {
-    	console.log('worksat', user.worksAt);
-	   	user.worksAt.forEach(store => {
-	   		this.stores.push({id : store, checked : false});
-	    });
- 		});
-
-    this.categoriesSubscription = productsService.getAllCategories().subscribe((category) => {
-      let auxArray = [];
-      category.forEach(cat => {
-        auxArray.push({ label : cat.value, value : cat.$key });
+    this.userSubscription = productsService.getStoresWhereUserWorks().subscribe((stores) => {
+      stores.forEach(store => {
+        this.stores.push({id: store.$key, name: store.name, address: store.location.address, checked: false});
       });
-      this.categories = auxArray;
-     });
+    });
+
+    this.categoriesSubscription = productsService.getAllCategories().subscribe((categories) => {
+      const aux: Category[] = [];
+      categories.forEach((category) => {
+        aux.push({label: category.value, value: category.$key});
+      });
+      this.categories = aux;
+    });
+
   }
 
-  ngOnInit() {}  
+  ngOnInit() {
+
+    this.productsService.databaseChanged.asObservable().subscribe((notification) => {
+      this.isLoading = false;
+      this.snackBar.open(notification.detail, 'ENTENDI', {
+        duration: 5000
+      });
+    });
+
+  }
 
   ngOnDestroy() {
     console.log('onDestroy');
     this.userSubscription.unsubscribe();
     this.categoriesSubscription.unsubscribe();
-  }  
+  }
 
   addNewProduct(data) {
-    
-    if(data.name.trim().length < 3 || data.description.trim().length < 20) {
-    	this.whitespaceError = true;
-    	return;
+    this.isLoading = true;
+    console.log(data);
+
+    data.images = [];
+    if (this.files.length === 0) {
+      this.isLoading = false;
+      this.snackBar.open('Adicione alguma imagem (.png, .jpg, .jpeg) antes de continuar!', 'ENTENDI', {
+        duration: 5000
+      });
+      return;
     } else {
-    	this.whitespaceError = false;
+      this.isLoading = true;
+      this.files.forEach((file, idx, arr) => {
+        this.productsService.optmizeImage(file).subscribe((res) => {
+          const response: any = res;
+          const base64image = response._body;
+          data.images.push(base64image);
+          if (idx === this.files.length - 1) {
+            this.addProduct(data);
+          }
+        });
+      });
     }
+  }
 
-    for(let store of this.stores) {
-    	this.selectAtLeastOneStore = store.checked;
-    	if(store.checked) {
-    		break;
-    	}
-    }
-
-    if(!this.selectAtLeastOneStore) {
-    	return;
-    }
-
-    if(this.files.length == 0) {
-      this.growlMessages = [{severity: 'error', summary: 'Erro', detail: 'Adicione alguma imagem (.png, .jpg, .jpeg) antes de continuar!'}];  
-      setTimeout(() => {
-        this.growlMessages = [];
-      }, 5000)
-      return;
-    }
-
-    data.images = this.files;
+  addProduct(data) {
     console.log(this.stores);
-    data.stores = this.stores
-              		.filter(store => store.checked)
-              		.map(store => store.id);
-
     this.productsService.addProduct(data);
-
-    firebase.database().ref(`/products-stores`).limitToLast(1).on('child_added', (snapshot) => {
-      this.growlMessages = [{severity: 'success', summary: 'Sucesso', detail: 'O produto foi cadastrado com êxito!'}];  
-      setTimeout(() => {
-        this.growlMessages = [];
-      }, 5000)
-    });
   }
-  
-  imageFinishedUploading(file) {
-    console.log(file, file.file.type);
-    if(file.file.type != 'image/jpeg' && file.file.type != 'image/png') {
+
+  imageFinishedUploading(event) {
+    console.log(event, event.file.type);
+    if ((event.file.type !== 'image/jpeg' && event.file.type !== 'image/png') || (event.file.size > 1100000)) {
+      this.snackBar.open('Remova as imagens com mais de 1MB. Elas não serão adicionadas!', 'ENTENDI', {
+        duration: 5000
+      });
       return;
     }
-    this.files.push(file.src);  
+
+    this.files.push(event.file);
+    console.log(this.files);
   }
 
-  imageRemoved(file) {
-    this.files.splice(this.files.indexOf(file.src), 1);
+
+  imageRemoved(event) {
+    this.files.splice(this.files.indexOf(event.file), 1);
+    console.log(this.files);
   }
 
   uploadStateChange(state: boolean) {
     console.log(JSON.stringify(state));
-  } 
+  }
 }

@@ -1,11 +1,9 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from './home/home.component';
+import {NgModule} from '@angular/core';
+import {Routes, RouterModule} from '@angular/router';
+import {HomeComponent} from './home/home.component';
+import {CallbackComponent} from './callback/callback.component';
 
 const routes: Routes = [
-  {
-    path: '', redirectTo: 'home', pathMatch: 'full'
-  },
   {
     path: 'home', component: HomeComponent
   },
@@ -14,7 +12,16 @@ const routes: Routes = [
   },
   {
     path: 'shopkeeper', loadChildren: './shopkeeper/shopkeeper.module#ShopkeeperModule'
-  },  
+  },
+  {
+    path: 'callback', component: CallbackComponent
+  },
+  {
+    path: '', redirectTo: 'home', pathMatch: 'full'
+  },
+  {
+    path: '__', component: CallbackComponent
+  },
   {
     path: '**', redirectTo: 'home', pathMatch: 'full'
   },
@@ -24,4 +31,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}
