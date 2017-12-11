@@ -22,9 +22,8 @@ export class IsLoggedAuthGuard implements CanActivate {
       console.log('user != null');
       return this.db.object(`users/${user.uid}`)
         .map((currentUser) => {
-          canActivate = currentUser.emailVerified && currentUser.profileVerified;
+          canActivate = (currentUser.emailVerified || user.emailVerified) && currentUser.profileVerified;
           if (canActivate) {
-            console.log('can t');
             this.router.navigate(['/shopkeeper/dashboard']);
             return false;
           }
@@ -32,7 +31,6 @@ export class IsLoggedAuthGuard implements CanActivate {
           return true;
         });
     } else {
-      console.log('user === null');
       return true;
     }
   }

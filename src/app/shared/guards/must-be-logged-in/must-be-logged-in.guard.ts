@@ -12,7 +12,7 @@ export class MustBeLoggedInGuard implements CanActivate {
   }
 
   canActivate(next: ActivatedRouteSnapshot,
-              state: RouterStateSnapshot): Observable<boolean> | boolean {
+    state: RouterStateSnapshot): Observable<boolean> | boolean {
     const user = JSON.parse(localStorage.getItem(`firebase:authUser:${environment.firebase.apiKey}:[DEFAULT]`));
     console.log(user);
     let canActivate;
@@ -20,10 +20,10 @@ export class MustBeLoggedInGuard implements CanActivate {
       console.log('user != null');
       return this.db.object(`users/${user.uid}`)
         .map((currentUser) => {
-          canActivate = currentUser.emailVerified && currentUser.profileVerified;
+          canActivate = (currentUser.emailVerified || user.emailVerified) && currentUser.profileVerified;
           if (!canActivate) {
             console.log('can t');
-            if (!currentUser.emailVerified) {
+            if (!(currentUser.emailVerified || user.emailVerified)) {
               this.router.navigate(['/subscribe/verification/email']);
             } else if (!currentUser.profileVerified) {
               this.router.navigate(['/subscribe/verification/admin']);
