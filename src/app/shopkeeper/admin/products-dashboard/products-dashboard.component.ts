@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ProductsService } from './services/products.service';
 
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -19,7 +19,7 @@ import { Title } from '@angular/platform-browser';
     templateUrl: './products-dashboard.component.html',
     styleUrls: ['./products-dashboard.component.css']
 })
-export class ProductsDashboardComponent implements OnInit {
+export class ProductsDashboardComponent implements OnInit, OnDestroy {
 
     stores: any[];
     user: User;
@@ -30,16 +30,20 @@ export class ProductsDashboardComponent implements OnInit {
     dataSource: ProductsDataSource;
 
     constructor(public snackBar: MatSnackBar, private productsService: ProductsService, private afAuth: AngularFireAuth, private dialogService: TdDialogService,
-                private viewContainerRef: ViewContainerRef, private router: Router, private titleService: Title) {
+        private viewContainerRef: ViewContainerRef, private router: Router, private titleService: Title) {
 
         this.products$.asObservable().subscribe((storeId) => {
-            this.dataSource = new ProductsDataSource(productsService, storeId);
+            if (storeId) {
+                this.dataSource = new ProductsDataSource(productsService, storeId);
+            }
         });
 
         this.userSubscription = productsService.getStoresWhereUserWorks().subscribe((stores) => {
             this.stores = stores;
-            this.lastSelected = this.stores[0].$key;
-            this.products$.next(this.lastSelected);
+            if (this.stores.length > 0) {
+                this.lastSelected = this.stores[0].$key;
+                this.products$.next(this.lastSelected);
+            }
         });
 
 
@@ -56,9 +60,16 @@ export class ProductsDashboardComponent implements OnInit {
         this.titleService.setTitle('Produtos');
     }
 
+    ngOnDestroy() {
+        this.products$.unsubscribe();
+        this.userSubscription.unsubscribe();
+    }
+
     onChange(value) {
-        this.lastSelected = value;
-        this.products$.next(this.lastSelected);
+        if (value) {
+            this.lastSelected = value;
+            this.products$.next(this.lastSelected);
+        }
     }
 
     deleteProduct(key, categories, store, picsQty) {
