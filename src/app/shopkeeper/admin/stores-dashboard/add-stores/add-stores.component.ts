@@ -192,7 +192,7 @@ export class AddStoresComponent implements OnInit, OnDestroy {
 
             this.store.location.parts = {};
             this.store.location.parts['street'] = addressFormValues.street;
-            this.store.location.parts['zipCode'] = (addressFormValues.zipCode);
+            this.store.location.parts['zipCode'] = addressFormValues.zipCode;
             this.store.location.parts['number'] = addressFormValues.number;
             this.store.location.parts['city'] = addressFormValues.city;
             this.store.location.parts['state'] = addressFormValues.state;

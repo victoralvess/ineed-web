@@ -5,13 +5,21 @@ export class CustomValidators {
   static minLength(minLength: number): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } => {
       console.log('noMinx');
-      return ((<string>control.value).replace(/\s/g, '').length < minLength) ? {'minlength': {value: control.value}} : null;
+      if (control.value) {
+        return ((<string>control.value).replace(/\s/g, '').length < minLength) ? { 'minlength': { value: control.value } } : null;
+      } else {
+        return null;
+      }
     };
   }
 
   static maxLength(maxLength: number): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } => {
-      return ((<string>control.value).replace(/\s/g, '').length > maxLength) ? {'maxlength': {value: control.value}} : null;
+      if (control.value) {
+        return ((<string>control.value).replace(/\s/g, '').length < maxLength) ? { 'maxlength': { value: control.value } } : null;
+      } else {
+        return null;
+      }
     };
   }
 
@@ -35,7 +43,7 @@ export class CustomValidators {
         if (hex != null) {
           control.setValue(hex);
         }
-        return (hex == null) ? {'colorsintax': {value: control.value}} : null;
+        return (hex == null) ? { 'colorsintax': { value: control.value } } : null;
       }
     };
   }
