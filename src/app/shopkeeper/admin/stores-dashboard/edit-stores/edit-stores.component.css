@@ -1,9 +1,15 @@
+#n-color-picker {
+    border-radius: 5px;
+    height: 25px;
+    color: rgba(0, 0, 0, 0);
+}
+
 .headers-align .mat-expansion-panel-header-title,
 .headers-align .mat-expansion-panel-header-description {
-  flex-basis: 0;
+    flex-basis: 0;
 }
 
 .headers-align .mat-expansion-panel-header-description {
-  justify-content: space-between;
-  align-items: center;
+    justify-content: space-between;
+    align-items: center;
 }

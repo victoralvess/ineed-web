@@ -10,6 +10,7 @@ import { User } from 'firebase/app';
 import { CustomValidators } from '../../../../shared/validators/custom-validators';
 import { MatSnackBar } from '@angular/material';
 import { Title } from '@angular/platform-browser';
+import { Commons } from '../../commons/commons';
 
 @Component({
     selector: 'app-edit-products',
@@ -43,6 +44,7 @@ export class EditProductsComponent implements OnInit, OnDestroy {
     });
 
     isLoading = false;
+    imageUploaderCustomStyle = Commons.IMAGE_UPLOADER_CUSTOM_STYLE;
 
     constructor(public snackBar: MatSnackBar, private fb: FormBuilder, private productsService: ProductsService, private activatedRoute: ActivatedRoute, private router: Router, private titleService: Title) {
 
@@ -79,7 +81,7 @@ export class EditProductsComponent implements OnInit, OnDestroy {
         this.categoriesSubscription = productsService.getAllCategories().subscribe((categories) => {
             const auxArray = [];
             categories.forEach((category) => {
-                auxArray.push({label: category.value, value: category.$key});
+                auxArray.push({ label: category.value, value: category.$key });
             });
             this.categories = auxArray;
             this.categoriesReady = true;

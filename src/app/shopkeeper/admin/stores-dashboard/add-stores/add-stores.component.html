@@ -60,7 +60,7 @@
                     </div>
                     <div fxFlex="100">
                         <image-upload [max]="5" [extensions]="['jpeg','png']" [buttonCaption]="'Escolha'" [dropBoxMessage]="'Solte suas imagens aqui!'" [fileTooLargeMessage]="'Imagem muito grande!'" (uploadFinished)="imageFinishedUploading($event)" (removed)="imageRemoved($event)"
-                            (uploadStateChanged)="uploadStateChange($event)"></image-upload>
+                            (uploadStateChanged)="uploadStateChange($event)" [style]="imageUploaderCustomStyle"></image-upload>
                     </div>
                     <mat-action-row style="margin-top: 50px">
                         <button mat-button color="primary" (click)="nextStep()" class="text-upper" [disabled]="!storeForm.valid">
@@ -273,5 +273,5 @@
     </mat-accordion>
 </div>
 <div *ngIf="isLoading">
-    <mat-progress-bar class="n-progress-bar" mode="indeterminate"></mat-progress-bar>
+    <mat-progress-bar class="n-progress-bar" mode="indeterminate" color="accent"></mat-progress-bar>
 </div>

@@ -30,6 +30,9 @@ export class StoresService {
       this.db.app.database().ref(`/stores/${store.key}/pictures/${this.picsUploaded}`).set(store.url);
       this.db.app.database().ref(`/employees-stores/${this.user.uid}/${store.key}/pictures/${this.picsUploaded}`).set(store.url);
       this.picsUploaded++;
+      if (store.last) {
+        this.update$.next(true);
+      }
     });
   }
 
@@ -64,19 +67,22 @@ export class StoresService {
 
     let picIndex = 0;
 
-    pictures.forEach((pic) => {
+    (<any[]>pictures).forEach((pic, idx, arr) => {
       firebase.storage().ref(`/${key}/pics/${picIndex}.jpeg`).putString(pic, 'data_url', {
         contentType: 'image/jpeg'
       }).then((snapshot) => {
         console.log('dUrl', snapshot.downloadURL);
-        this.pictureAdded$.next({key: key, url: snapshot.downloadURL});
+        let picture = { key: key, url: snapshot.downloadURL, last: false };
+        if (idx === arr.length - 1) {
+          picture.last = true;
+        }
+        this.pictureAdded$.next(picture);
       });
 
       picIndex++;
 
     });
 
-    this.update$.next(true);
   }
 
   updateStore(store, sendPics: any[], originalUrls: any[], addedPics?: any[]) {
@@ -106,20 +112,20 @@ export class StoresService {
     });
 
     if (addedPics && addedPics.length > 0) {
-      addedPics.forEach((image) => {
+      addedPics.forEach((image, idx, arr) => {
         firebase.storage().ref(`/${store.id}/pics/${this.crudService.unique()}.jpeg`).putString(image, 'data_url', {
           contentType: 'image/jpeg'
         }).then((snapshot) => {
           console.log('dUrl', snapshot.downloadURL);
-          this.pictureAdded$.next({
-            key: store.id,
-            url: snapshot.downloadURL
-          });
+          let picture = { key: store.id, url: snapshot.downloadURL, last: false };
+          if (idx === arr.length - 1) {
+            picture.last = true;
+          }
+          this.pictureAdded$.next(picture);
         });
       });
     }
 
-    this.update$.next(true);
   }
 
   deleteStore(key: string) {

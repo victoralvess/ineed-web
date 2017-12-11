@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import {ActivatedRoute, Params, Router} from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Store } from '../../../models/store.model';
@@ -50,7 +50,7 @@ export class EditEmployeesComponent implements OnInit, OnDestroy {
     employeeStoresSubscription;
 
     isLoading = false;
-    userSnackBar = {messageSuccess: 'Atualizado com sucesso!', messageError: 'Erro ao atualizar'};
+    userSnackBar = { messageSuccess: 'Atualizado com sucesso!', messageError: 'Erro ao atualizar' };
 
 
     constructor(public snackBar: MatSnackBar, private employeesService: EmployeesService, private activatedRoute: ActivatedRoute, private router: Router, private titleService: Title) {
@@ -74,7 +74,7 @@ export class EditEmployeesComponent implements OnInit, OnDestroy {
 
                 this.name = employee.name;
                 this.email = employee.email;
-                this.employeeForm.patchValue({permissionLevel: employee.permissionLevel});
+                this.employeeForm.patchValue({ permissionLevel: employee.permissionLevel });
                 this.employeeStoresSubscription = employeesService.getStoresWhereEmployeeWorks(this.employeeId).subscribe((stores) => {
                     const employeeWorksAtList = [];
                     stores.forEach(store => {
@@ -88,7 +88,7 @@ export class EditEmployeesComponent implements OnInit, OnDestroy {
                     });
                     this.employeeWorksAt = employeeWorksAtList;
                     this.storesHack$.next([this.stores, this.nonEditableStores]);
-                    this.employeeForm.patchValue({stores: employeeWorksAtList});
+                    this.employeeForm.patchValue({ stores: employeeWorksAtList });
                     console.log(employee, stores);
                 });
             });

@@ -18,6 +18,7 @@ import { MatSnackBar } from '@angular/material';
 import { TimeOperationsController } from '../commons/time-operations.controller';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { Commons } from '../../commons/commons';
 
 @Component({
     selector: 'app-add-stores',
@@ -84,6 +85,8 @@ export class AddStoresComponent implements OnInit, OnDestroy {
 
     timeOperations: TimeOperationsController;
     color = '#3F51B5';
+
+    imageUploaderCustomStyle = Commons.IMAGE_UPLOADER_CUSTOM_STYLE;
 
     constructor(public snackBar: MatSnackBar, private dialog: MatDialog, private toast: Md2Toast, private locationService: LocationService, private storesService: StoresService, private viewContainerRef: ViewContainerRef, private dialogService: TdDialogService, private router: Router, private titleService: Title) {
         this.timeOperations = new TimeOperationsController(dialog, viewContainerRef, dialogService);

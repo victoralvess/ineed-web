@@ -9,6 +9,7 @@ import { Category } from '../../../models/category.model';
 import { CustomValidators } from '../../../../shared/validators/custom-validators';
 import { MatSnackBar } from '@angular/material';
 import { Title } from '@angular/platform-browser';
+import { Commons } from '../../commons/commons';
 
 @Component({
     selector: 'app-add-products',
@@ -28,7 +29,7 @@ export class AddProductsComponent implements OnInit, OnDestroy {
     userSubscription;
     categoriesSubscription;
     isLoading = false;
-
+    imageUploaderCustomStyle = Commons.IMAGE_UPLOADER_CUSTOM_STYLE;
     constructor(public snackBar: MatSnackBar, private fb: FormBuilder, private productsService: ProductsService, private titleService: Title) {
         this.productsForm = new FormGroup({
             name: new FormControl('', Validators.compose([Validators.required, CustomValidators.minLength(3), CustomValidators.maxLength(40)])),
@@ -40,14 +41,14 @@ export class AddProductsComponent implements OnInit, OnDestroy {
 
         this.userSubscription = productsService.getStoresWhereUserWorks().subscribe((stores) => {
             stores.forEach(store => {
-                this.stores.push({id: store.$key, name: store.name, address: store.location.address, checked: false});
+                this.stores.push({ id: store.$key, name: store.name, address: store.location.address, checked: false });
             });
         });
 
         this.categoriesSubscription = productsService.getAllCategories().subscribe((categories) => {
             const aux: Category[] = [];
             categories.forEach((category) => {
-                aux.push({label: category.value, value: category.$key});
+                aux.push({ label: category.value, value: category.$key });
             });
             this.categories = aux;
         });
