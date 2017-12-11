@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { StoresService } from '../services/stores.service';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { CustomValidators } from '../../../../shared/validators/custom-validators';
@@ -50,13 +50,13 @@ export class EditStoresComponent implements OnInit, OnDestroy {
     categoriesSubscription: Subscription;
     categories = [];
     paymentMethods = [
-        {label: 'Dinheiro', value: 'money'},
-        {label: 'Boleto', value: 'payment-slip'},
-        {label: 'PayPal', value: 'paypal'},
-        {label: 'Cartão de Débito', value: 'debit'},
-        {label: 'Cartão de Crédito', value: 'credit'},
-        {label: 'Cheque', value: 'check'},
-        {label: 'Bitcoin', value: 'bitcoin'}
+        { label: 'Dinheiro', value: 'money' },
+        { label: 'Boleto', value: 'payment-slip' },
+        { label: 'PayPal', value: 'paypal' },
+        { label: 'Cartão de Débito', value: 'debit' },
+        { label: 'Cartão de Crédito', value: 'credit' },
+        { label: 'Cheque', value: 'check' },
+        { label: 'Bitcoin', value: 'bitcoin' }
     ];
     storeForm = new FormGroup({
         name: new FormControl('', Validators.compose([Validators.required, CustomValidators.minLength(3), CustomValidators.maxLength(45)])),
@@ -87,6 +87,7 @@ export class EditStoresComponent implements OnInit, OnDestroy {
 
     isLoading = false;
     timeOperations: TimeOperationsController;
+    color = '#3F51B5';
 
     constructor(public snackBar: MatSnackBar, private dialog: MatDialog, private toast: Md2Toast, private locationService: LocationService, private viewContainerRef: ViewContainerRef, private dialogService: TdDialogService, private storesService: StoresService, private activatedRoute: ActivatedRoute, private router: Router, private titleService: Title) {
         this.timeOperations = new TimeOperationsController(dialog, viewContainerRef, dialogService);
@@ -97,7 +98,7 @@ export class EditStoresComponent implements OnInit, OnDestroy {
         this.locationServiceSubscription = this.locationService.response$.asObservable().subscribe((responses) => {
             if (responses === null) {
                 this.addressForm.controls['zipCode'].setValue('');
-                this.addressForm.controls['zipCode'].setErrors({'required': true});
+                this.addressForm.controls['zipCode'].setErrors({ 'required': true });
             } else {
                 this.addressForm.controls['street'].setValue(responses[0].endereco);
                 this.addressForm.controls['city'].setValue(responses[0].cidade);
@@ -128,7 +129,7 @@ export class EditStoresComponent implements OnInit, OnDestroy {
         this.categoriesSubscription = storesService.getAllCategories().subscribe((categories) => {
             const aux: Category[] = [];
             categories.forEach((category) => {
-                aux.push({label: category.value, value: category.$key});
+                aux.push({ label: category.value, value: category.$key });
             });
             this.categories = aux;
             this.categoriesReady = true;
@@ -147,11 +148,12 @@ export class EditStoresComponent implements OnInit, OnDestroy {
                 this.picsUrls = foundStore.pictures;
                 this.store.location = foundStore.location;
                 /* SETTING DATA IN FIELDS */
-                this.storeForm.patchValue({'name': foundStore.name});
-                this.storeForm.patchValue({'description': foundStore.description});
-                this.storeForm.patchValue({'color': foundStore.color});
-                this.storeForm.patchValue({'cnpj': foundStore.cnpj});
+                this.storeForm.patchValue({ 'name': foundStore.name });
+                this.storeForm.patchValue({ 'description': foundStore.description });
+                this.storeForm.patchValue({ 'color': foundStore.color });
+                this.storeForm.patchValue({ 'cnpj': foundStore.cnpj });
 
+                this.color = foundStore.color;
                 // this.openingClosingForm.patchValue({ 'days': foundStore.businessTimes });
                 this.timeOperations.openingClosingArr = (<any[]>foundStore.businessTimes);
                 (<any[]>foundStore.businessTimes).forEach((day) => {
@@ -161,17 +163,17 @@ export class EditStoresComponent implements OnInit, OnDestroy {
                     }
                 });
 
-                this.addressForm.patchValue({'street': foundStore.location.parts['street']});
-                this.addressForm.patchValue({'zipCode': foundStore.location.parts['zipCode']});
-                this.addressForm.patchValue({'number': foundStore.location.parts['number']});
-                this.addressForm.patchValue({'city': foundStore.location.parts['city']});
-                this.addressForm.patchValue({'state': foundStore.location.parts['state']});
-                this.addressForm.patchValue({'vicinity': foundStore.location.parts['vicinity']});
+                this.addressForm.patchValue({ 'street': foundStore.location.parts['street'] });
+                this.addressForm.patchValue({ 'zipCode': foundStore.location.parts['zipCode'] });
+                this.addressForm.patchValue({ 'number': foundStore.location.parts['number'] });
+                this.addressForm.patchValue({ 'city': foundStore.location.parts['city'] });
+                this.addressForm.patchValue({ 'state': foundStore.location.parts['state'] });
+                this.addressForm.patchValue({ 'vicinity': foundStore.location.parts['vicinity'] });
 
-                this.extraInfoForm.patchValue({'mainCategories': foundStore.categories || []});
-                this.extraInfoForm.patchValue({'mainPaymentWays': foundStore.paymentWays || []});
-                this.extraInfoForm.patchValue({'phone': foundStore.phone || ''});
-                this.extraInfoForm.patchValue({'cellphone': foundStore.cellphone || ''});
+                this.extraInfoForm.patchValue({ 'mainCategories': foundStore.categories || [] });
+                this.extraInfoForm.patchValue({ 'mainPaymentWays': foundStore.paymentWays || [] });
+                this.extraInfoForm.patchValue({ 'phone': foundStore.phone || '' });
+                this.extraInfoForm.patchValue({ 'cellphone': foundStore.cellphone || '' });
 
                 this.addressReady$.next(true);
             });
@@ -252,7 +254,7 @@ export class EditStoresComponent implements OnInit, OnDestroy {
 
             this.store.name = storeFormValues.name;
             this.store.description = storeFormValues.description;
-            this.store.color = storeFormValues.color;
+            this.store.color = storeFormValues.color = this.color;
             this.store.cnpj = storeFormValues.cnpj;
 
             // this.store.location.parts = {};

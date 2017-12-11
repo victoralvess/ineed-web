@@ -7,7 +7,6 @@ import { AddStoresComponent } from './add-stores/add-stores.component';
 import { EditStoresComponent } from './edit-stores/edit-stores.component';
 import { CodeHighlighterModule, InputMaskModule } from 'primeng/primeng';
 import { FormsModule } from '@angular/forms';
-import { ColorPickerModule } from 'primeng/primeng';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TextMaskModule } from 'angular2-text-mask';
 import { HttpModule } from '@angular/http';
@@ -56,12 +55,12 @@ import { StoresService } from './services/stores.service';
 import { LocationService } from './services/location/location.service';
 import { TimePickerDialogComponent } from './time-picker-dialog/time-picker-dialog.component';
 import { FeedbacksComponent } from './feedbacks/feedbacks.component';
+import { ColorPickerModule } from 'narik-angular-color-picker';
 @NgModule({
   imports: [
     CommonModule,
     StoresDashboardRoutingModule,
     InputMaskModule,
-    ColorPickerModule,
     CodeHighlighterModule,
     ImageUploadModule.forRoot(),
     FormsModule,
@@ -103,7 +102,8 @@ import { FeedbacksComponent } from './feedbacks/feedbacks.component';
     MatTooltipModule,
     MatStepperModule,
     FlexLayoutModule,
-    CovalentDataTableModule
+    CovalentDataTableModule,
+    ColorPickerModule
   ],
   declarations: [StoresDashboardComponent, AddStoresComponent, EditStoresComponent, TimePickerDialogComponent, FeedbacksComponent],
   providers: [StoresService, LocationService, ProductsService, NotificationsService, CrudService],

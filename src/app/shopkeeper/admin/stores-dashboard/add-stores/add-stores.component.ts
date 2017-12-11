@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { CustomValidators } from '../../../../shared/validators/custom-validators';
@@ -44,13 +44,13 @@ export class AddStoresComponent implements OnInit, OnDestroy {
     categoriesSubscription: Subscription;
     categories = [];
     paymentMethods = [
-        {label: 'Dinheiro', value: 'money'},
-        {label: 'Boleto', value: 'payment-slip'},
-        {label: 'PayPal', value: 'paypal'},
-        {label: 'Cartão de Débito', value: 'debit'},
-        {label: 'Cartão de Crédito', value: 'credit'},
-        {label: 'Cheque', value: 'check'},
-        {label: 'Bitcoin', value: 'bitcoin'}
+        { label: 'Dinheiro', value: 'money' },
+        { label: 'Boleto', value: 'payment-slip' },
+        { label: 'PayPal', value: 'paypal' },
+        { label: 'Cartão de Débito', value: 'debit' },
+        { label: 'Cartão de Crédito', value: 'credit' },
+        { label: 'Cheque', value: 'check' },
+        { label: 'Bitcoin', value: 'bitcoin' }
     ];
 
     storeForm = new FormGroup({
@@ -83,6 +83,7 @@ export class AddStoresComponent implements OnInit, OnDestroy {
     isLoading = false;
 
     timeOperations: TimeOperationsController;
+    color = '#3F51B5';
 
     constructor(public snackBar: MatSnackBar, private dialog: MatDialog, private toast: Md2Toast, private locationService: LocationService, private storesService: StoresService, private viewContainerRef: ViewContainerRef, private dialogService: TdDialogService, private router: Router, private titleService: Title) {
         this.timeOperations = new TimeOperationsController(dialog, viewContainerRef, dialogService);
@@ -93,7 +94,7 @@ export class AddStoresComponent implements OnInit, OnDestroy {
         this.locationServiceSubscription = this.locationService.response$.asObservable().subscribe((responses) => {
             if (responses === null) {
                 this.addressForm.controls['zipCode'].setValue('');
-                this.addressForm.controls['zipCode'].setErrors({'required': true});
+                this.addressForm.controls['zipCode'].setErrors({ 'required': true });
             } else {
                 this.addressForm.controls['street'].setValue(responses[0].endereco);
                 this.addressForm.controls['city'].setValue(responses[0].cidade);
@@ -123,7 +124,7 @@ export class AddStoresComponent implements OnInit, OnDestroy {
         this.categoriesSubscription = storesService.getAllCategories().subscribe((categories) => {
             const aux: Category[] = [];
             categories.forEach((category) => {
-                aux.push({label: category.value, value: category.$key});
+                aux.push({ label: category.value, value: category.$key });
             });
             this.categories = aux;
             this.categoriesReady = true;
@@ -177,7 +178,7 @@ export class AddStoresComponent implements OnInit, OnDestroy {
             } else {
                 this.store.businessTimes = [];
                 this.timeOperations.openingClosingArr.forEach((oc) => {
-                    this.store.businessTimes.push({day: oc.day, open: oc.openingParsed, close: oc.closingParsed});
+                    this.store.businessTimes.push({ day: oc.day, open: oc.openingParsed, close: oc.closingParsed });
                 });
             }
             const storeFormValues = formsValues[0];
@@ -187,7 +188,7 @@ export class AddStoresComponent implements OnInit, OnDestroy {
 
             this.store.name = storeFormValues.name;
             this.store.description = storeFormValues.description;
-            this.store.color = storeFormValues.color;
+            this.store.color = storeFormValues.color = this.color;
             this.store.cnpj = storeFormValues.cnpj;
 
             this.store.location.parts = {};

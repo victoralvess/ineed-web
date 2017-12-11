@@ -5,21 +5,22 @@ export class CustomValidators {
   static minLength(minLength: number): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } => {
       console.log('noMinx');
-      if (control.value) {
-        return ((<string>control.value).replace(/\s/g, '').length < minLength) ? { 'minlength': { value: control.value } } : null;
-      } else {
-        return null;
+      let val = control.value;
+      if (!val) {
+        val = '';
       }
+      return ((<string>val).replace(/\s/g, '').length < minLength) ? { 'minlength': { value: control.value } } : null;
+
     };
   }
 
   static maxLength(maxLength: number): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } => {
-      if (control.value) {
-        return ((<string>control.value).replace(/\s/g, '').length < maxLength) ? { 'maxlength': { value: control.value } } : null;
-      } else {
-        return null;
+      let val = control.value;
+      if (!val) {
+        val = '';
       }
+      return ((<string>val).replace(/\s/g, '').length > maxLength) ? { 'maxlength': { value: control.value } } : null;
     };
   }
 
