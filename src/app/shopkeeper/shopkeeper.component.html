@@ -2,8 +2,8 @@
   <div class="row display-table-row">
     <mat-sidenav-container class="n-container">
       <mat-sidenav [disableClose]="isDesktop" [opened]="isDesktop" #sidenav class="n-sidenav" [mode]="mode">
-        <img [src]="user?.providerData[0]?.photoURL || user.photoURL" alt="user picture"
-             class="n-circle-logo n-margin ">
+        <img [src]="user?.providerData[0]?.photoURL || user?.photoURL || ('https://ui-avatars.com/api/?background=ad69f7&color=fff&name='+user.displayName)"
+          alt="user picture" class="n-circle-logo n-margin ">
         <br/>
         <div class="n-header">
           <span class="mat-nav-name n-padding">{{user.displayName}}</span>
@@ -13,8 +13,7 @@
         </div>
         <mat-divider></mat-divider>
         <mat-nav-list>
-          <a *ngFor="let item of routes" mat-list-item [routerLink]="item.route" [target]="item.target"
-             (click)="(!sidenav.disableClose) ? sidenav.close() : null">
+          <a *ngFor="let item of routes" mat-list-item [routerLink]="item.route" [target]="item.target" (click)="(!sidenav.disableClose) ? sidenav.close() : null">
             <mat-icon>{{item.icon}}</mat-icon>
             {{item.title}}</a>
         </mat-nav-list>
@@ -69,11 +68,15 @@
 
             <div class="row">
               <div class="col-md-10">
-                <h4 class="copyright-text-footer" align="left">© COPYRIGHT 2017 - iNeed, TODOS OS DIREITOS
-                  RESERVADOS.</h4>
+                <h4 class="copyright-text-footer" align="left">© COPYRIGHT 2017 - iNeed, TODOS OS DIREITOS RESERVADOS.
+                </h4>
               </div>
-              <div class="col-md-1"><a href="#">Sobre</a></div>
-              <div class="col-md-1"><a href="#">Ajuda</a></div>
+              <div class="col-md-1">
+                <a href="#">Sobre</a>
+              </div>
+              <div class="col-md-1">
+                <a href="#">Ajuda</a>
+              </div>
             </div>
 
           </div>
