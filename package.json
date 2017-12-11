@@ -11,8 +11,10 @@
     "e2e": "ng e2e",
     "precache": "sw-precache",
     "precache-build": "sw-precache --verbose --config=sw-precache-config.js",
-    "upload": "ng build --aot --prod && gulp css js && npm run precache-build && gulp js && firebase deploy --only hosting"
+    "upload": "ng build --aot --prod && gulp css js && npm run precache-build && gulp js && firebase deploy --only hosting",
+    "hostinger": "ng build  --aot --prod && gulp css js && npm run precache-build && gulp js"
   },
+  "precache": "sw-precache --verbose --config=sw-precache-config.js",
   "private": true,
   "dependencies": {
     "@angular/animations": "^4.4.4",

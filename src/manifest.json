@@ -1,7 +1,7 @@
 {
   "name": "iNeed",
   "short_name": "iNeed",
-  "start_url": "./?utm_source=web_app_manifest",
+  "start_url": "/",
   "icons": [
     {
       "src": "./assets/icons/icon-192x192.png",
@@ -24,7 +24,7 @@
       "type": "image/png"
     }
   ],
-  "theme_color": "#b92b27",
+  "theme_color": "#8E24AA",
   "background_color": "#ffffff",
   "display": "browser",
   "orientation": "portrait"
