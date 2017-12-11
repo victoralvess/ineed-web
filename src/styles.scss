@@ -6,7 +6,40 @@
 
 @include mat-core();
 
-$primary: mat-palette($mat-purple, 600);
+$ineed-primary: (
+  50: #834ae6,
+  100: #834ae6,
+  200: #834ae6,
+  300: #834ae6,
+  400: #834ae6,
+  500: #834ae6,
+  600: #834ae6,
+  700: #834ae6,
+  800: #834ae6,
+  900: #834ae6,
+  A100: #834ae6,
+  A200: #834ae6,
+  A400: #834ae6,
+  A700: #834ae6,
+  contrast: (
+    50: $black-87-opacity,
+    100: $black-87-opacity,
+    200: $black-87-opacity,
+    300: white,
+    400: white,
+    500: $white-87-opacity,
+    600: $white-87-opacity,
+    700: $white-87-opacity,
+    800: $white-87-opacity,
+    900: $white-87-opacity,
+    A100: $black-87-opacity,
+    A200: white,
+    A400: white,
+    A700: white,
+  )
+);
+
+$primary: mat-palette($ineed-primary, 600);
 $accent:  mat-palette($mat-orange, 600, A100, A400);
 
 $warn:    mat-palette($mat-red, 600);

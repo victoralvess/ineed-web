@@ -71,8 +71,8 @@ a:visited, a:focus, a:active {
 }
 
 .carousel-caption h1 {
-    color: #8E24AA;
-    text-shadow: 0 0 0 #8E24AA;
+    color: #834ae6;
+    text-shadow: 0 0 0 #834ae6;
     font-family: "Noto Sans", serif;
 }
 
@@ -242,7 +242,7 @@ a:hover {
 
 .block-one {
     margin: 0 0 0 0;
-    background-color: #8E24AA;
+    background-color: #834ae6;
     height: auto;
 }
 
@@ -360,4 +360,8 @@ a:hover {
 
 .icon.love {
     background: url(../../assets/img/love.png);
+}
+
+footer {
+background: #834ae6;
 }
