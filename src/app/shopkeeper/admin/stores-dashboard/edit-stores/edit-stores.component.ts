@@ -233,6 +233,7 @@ export class EditStoresComponent implements OnInit, OnDestroy {
         const originalPics = JSON.parse(localStorage.getItem(`${this.storeId}/Pictures`));
         if (this.ready) {
             if (this.timeOperations.openingClosingArr.length === 0) {
+                this.isLoading = false;
                 this.toast.show('ADICIONE OS HORÁRIOS DE FUNCIONAMENTO');
                 return;
             } else {

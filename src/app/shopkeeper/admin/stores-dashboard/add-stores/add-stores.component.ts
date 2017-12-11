@@ -173,6 +173,7 @@ export class AddStoresComponent implements OnInit, OnDestroy {
         this.isLoading = true;
         if (this.ready) {
             if (this.timeOperations.openingClosingArr.length === 0) {
+                this.isLoading = false;
                 this.toast.show('ADICIONE OS HORÁRIOS DE FUNCIONAMENTO');
                 return;
             } else {
@@ -217,6 +218,7 @@ export class AddStoresComponent implements OnInit, OnDestroy {
 
             if (this.files.length === 0) {
                 this.toast.toast('Adicione alguma imagem (.png, .jpg, .jpeg) antes de continuar!');
+                this.isLoading = false;
                 return;
             } else {
                 const pictures: string[] = [];
