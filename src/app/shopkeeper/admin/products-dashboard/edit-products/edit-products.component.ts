@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ProductsService } from '../services/products.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { SelectItem } from 'primeng/primeng';
 
 import 'rxjs/add/operator/map';
 import { FileHolder } from 'angular2-image-upload';
@@ -21,7 +20,7 @@ export class EditProductsComponent implements OnInit, OnDestroy {
 
     user: User;
     productId: any;
-    categories: SelectItem[];
+    categories: any[];
     productStore = '';
     dataImagesAux = [];
     activatedRouteSubscription;

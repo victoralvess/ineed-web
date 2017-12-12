@@ -16,8 +16,16 @@ import { MatCardModule } from '@angular/material/card';
     CommonModule,
     ShopkeeperRoutingModule,
     MatToolbarModule,
-    MatIconModule, MatButtonModule, MatMenuModule, MatListModule, MatSidenavModule, FlexLayoutModule, MatSnackBarModule,
-    CovalentMenuModule, CovalentLayoutModule, MatCardModule
+    MatIconModule,
+    MatButtonModule,
+    MatMenuModule,
+    MatListModule,
+    MatSidenavModule,
+    FlexLayoutModule,
+    MatSnackBarModule,
+    CovalentMenuModule,
+    CovalentLayoutModule,
+    MatCardModule
   ],
   declarations: [ShopkeeperComponent, MainDashboardComponent],
   exports: [],

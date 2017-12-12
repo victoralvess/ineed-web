@@ -11,7 +11,7 @@ import { MessageEmailVerificationComponent } from './message-email-verification/
 import { MessageAdminVerificationComponent } from './message-admin-verification/message-admin-verification.component';
 import { SubscribeComponent } from './subscribe.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { MatIconModule, MatListModule, MatInputModule, MatCardModule, MatButtonModule, NoConflictStyleCompatibilityMode, CompatibilityModule } from '@angular/material';
+import { MatIconModule, MatInputModule, MatCardModule, MatButtonModule, NoConflictStyleCompatibilityMode, CompatibilityModule } from '@angular/material';
 
 @NgModule({
   imports: [
@@ -21,9 +21,21 @@ import { MatIconModule, MatListModule, MatInputModule, MatCardModule, MatButtonM
     ReactiveFormsModule,
     SubscribeRoutingModule,
     FlexLayoutModule,
-    MatIconModule, MatListModule, MatCardModule, MatButtonModule, NoConflictStyleCompatibilityMode, CompatibilityModule, MatInputModule
+    MatIconModule,
+    MatCardModule,
+    MatButtonModule,
+    NoConflictStyleCompatibilityMode,
+    CompatibilityModule,
+    MatInputModule
   ],
-  declarations: [SignUpComponent, SignInComponent, PasswordForgotComponent, MessageEmailVerificationComponent, MessageAdminVerificationComponent, SubscribeComponent]
+  declarations: [
+    SignUpComponent,
+    SignInComponent,
+    PasswordForgotComponent,
+    MessageEmailVerificationComponent,
+    MessageAdminVerificationComponent,
+    SubscribeComponent
+  ]
 })
 export class SubscribeModule {
 }

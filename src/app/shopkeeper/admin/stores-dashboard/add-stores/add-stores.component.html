@@ -40,7 +40,7 @@
                     </div>
                     <div fxFlex="100">
                         <mat-form-field fxFlex="50">
-                            <input id="n-color-picker" matInput [(colorPicker)]="color" [cpAlphaChannel]="'disabled'" placeholder="Cor da loja" [style.background]="color" />
+                            <input id="n-color-picker" readonly value="." matInput [(colorPicker)]="color" [cpAlphaChannel]="'disabled'" placeholder="Cor da loja" [style.background]="color" />
                             <mat-hint align="start">Essa cor será usada na tela da sua loja no aplicativo Android</mat-hint>
                         </mat-form-field>
                     </div>

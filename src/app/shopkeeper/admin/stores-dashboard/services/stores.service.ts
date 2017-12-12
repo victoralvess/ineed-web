@@ -124,7 +124,9 @@ export class StoresService {
           this.pictureAdded$.next(picture);
         });
       });
-    }
+    } else {
+this.update$.next(true);
+}
 
   }
 

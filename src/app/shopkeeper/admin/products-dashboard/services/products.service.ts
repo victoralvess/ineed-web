@@ -6,9 +6,6 @@ import { Http } from '@angular/http';
 import * as firebase from 'firebase';
 
 import { Subject } from 'rxjs/Subject';
-
-import { NotificationsService } from '../../../../shared/services/notifications/notifications.service';
-import { Message } from 'primeng/primeng';
 import { Router } from '@angular/router';
 
 @Injectable()
@@ -17,12 +14,12 @@ export class ProductsService {
     optimizationAPI = 'https://2need.store';
 
     user: firebase.User;
-    databaseChanged = new Subject<Message>();
+    databaseChanged = new Subject<any>();
     pictureAdded = new Subject<any>();
     picsUploaded = {};
     picIndex = {};
 
-    constructor(public db: AngularFireDatabase, private auth: AuthService, private http: Http, private notifications: NotificationsService, private router: Router) {
+    constructor(public db: AngularFireDatabase, private auth: AuthService, private http: Http, private router: Router) {
         this.user = firebase.auth().currentUser;
         this.pictureAdded.asObservable().subscribe((product) => {
             console.log('picsUp', this.picsUploaded);
@@ -164,7 +161,7 @@ export class ProductsService {
 
     verifyChangesOnProducts(productKey, successSummary, successMessage) {
         this.db.app.database().ref(`/products/${productKey}`).once('value', (s) => {
-            this.databaseChanged.next(this.notifications.success(successSummary, successMessage));
+            this.databaseChanged.next({ detail: successMessage });
         });
     }
 

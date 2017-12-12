@@ -10,33 +10,18 @@ import { EmployeesDashboardComponent } from './employees-dashboard.component';
 import { EditEmployeesComponent } from './edit-employees/edit-employees.component';
 
 import { EmployeesService } from './services/employees.service';
-
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-import { NgxPaginationModule } from 'ngx-pagination';
-import { MultiSelectModule, GrowlModule } from 'primeng/primeng';
 import { ImageUploadModule } from 'angular2-image-upload';
-
-import { ModalModule } from 'ngx-modialog';
-
 import { CovalentDialogsModule } from '@covalent/core';
 import { NoConflictStyleCompatibilityMode, CompatibilityModule } from '@angular/material';
 import {
-  MatAutocompleteModule,
   MatButtonModule,
-  MatButtonToggleModule,
   MatCardModule,
-  MatCheckboxModule,
-  MatChipsModule,
-  MatDatepickerModule,
   MatDialogModule,
   MatExpansionModule,
-  MatGridListModule,
   MatIconModule,
   MatInputModule,
   MatListModule,
   MatMenuModule,
-  MatNativeDateModule,
-  MatPaginatorModule,
   MatProgressBarModule,
   MatProgressSpinnerModule,
   MatRadioModule,
@@ -46,11 +31,9 @@ import {
   MatSliderModule,
   MatSlideToggleModule,
   MatSnackBarModule,
-  MatSortModule,
   MatTableModule,
   MatTabsModule,
   MatToolbarModule,
-  MatTooltipModule,
   MatStepperModule
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -64,32 +47,19 @@ import { Auth0Service } from '../../../shared/services/auth0-service/auth0.servi
     HttpModule,
     FormsModule,
     ReactiveFormsModule,
-    BsDropdownModule.forRoot(),
-    NgxPaginationModule,
     EmployeesDashboardRoutingModule,
-    MultiSelectModule,
-    GrowlModule,
     ImageUploadModule.forRoot(),
-    ModalModule.forRoot(),
     CovalentDialogsModule,
     NoConflictStyleCompatibilityMode,
     CompatibilityModule,
-    MatAutocompleteModule,
     MatButtonModule,
-    MatButtonToggleModule,
     MatCardModule,
-    MatCheckboxModule,
-    MatChipsModule,
-    MatDatepickerModule,
     MatDialogModule,
     MatExpansionModule,
-    MatGridListModule,
     MatIconModule,
     MatInputModule,
     MatListModule,
     MatMenuModule,
-    MatNativeDateModule,
-    MatPaginatorModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,
     MatRadioModule,
@@ -99,22 +69,14 @@ import { Auth0Service } from '../../../shared/services/auth0-service/auth0.servi
     MatSliderModule,
     MatSlideToggleModule,
     MatSnackBarModule,
-    MatSortModule,
     MatTableModule,
     MatTabsModule,
     MatToolbarModule,
-    MatTooltipModule,
     MatStepperModule,
     HttpModule,
     FormsModule,
     ReactiveFormsModule,
-    BsDropdownModule.forRoot(),
-    NgxPaginationModule,
-    EmployeesDashboardRoutingModule,
-    MultiSelectModule,
-    GrowlModule,
-    ImageUploadModule.forRoot(),
-    ModalModule.forRoot()
+    EmployeesDashboardRoutingModule
   ],
   declarations: [EmployeesDashboardComponent, AddEmployeesComponent, EditEmployeesComponent],
   exports: [EmployeesDashboardComponent, AddEmployeesComponent, EditEmployeesComponent],

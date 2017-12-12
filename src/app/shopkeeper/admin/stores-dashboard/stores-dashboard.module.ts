@@ -5,7 +5,6 @@ import { StoresDashboardRoutingModule } from './stores-dashboard-routing.module'
 import { StoresDashboardComponent } from './stores-dashboard.component';
 import { AddStoresComponent } from './add-stores/add-stores.component';
 import { EditStoresComponent } from './edit-stores/edit-stores.component';
-import { CodeHighlighterModule, InputMaskModule } from 'primeng/primeng';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TextMaskModule } from 'angular2-text-mask';
@@ -15,40 +14,26 @@ import { CovalentDialogsModule, CovalentDataTableModule } from '@covalent/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ImageUploadModule } from 'angular2-image-upload';
 import { ProductsService } from '../products-dashboard/services/products.service';
-import { NotificationsService } from '../../../shared/services/notifications/notifications.service';
 import { CrudService } from '../../../shared/services/crud-service/crud.service';
 import {
-  MatAutocompleteModule,
   MatButtonModule,
-  MatButtonToggleModule,
   MatCardModule,
   MatCheckboxModule,
-  MatChipsModule,
-  MatDatepickerModule,
   MatDialogModule,
   MatExpansionModule,
-  MatGridListModule,
   MatIconModule,
   MatInputModule,
-  MatListModule,
   MatMenuModule,
   MatNativeDateModule,
-  MatPaginatorModule,
   MatProgressBarModule,
   MatProgressSpinnerModule,
   MatRadioModule,
   MatRippleModule,
   MatSelectModule,
   MatSidenavModule,
-  MatSliderModule,
-  MatSlideToggleModule,
   MatSnackBarModule,
-  MatSortModule,
   MatTableModule,
-  MatTabsModule,
-  MatToolbarModule,
-  MatTooltipModule,
-  MatStepperModule
+  MatToolbarModule
 } from '@angular/material';
 
 import { StoresService } from './services/stores.service';
@@ -56,12 +41,11 @@ import { LocationService } from './services/location/location.service';
 import { TimePickerDialogComponent } from './time-picker-dialog/time-picker-dialog.component';
 import { FeedbacksComponent } from './feedbacks/feedbacks.component';
 import { ColorPickerModule } from 'ngx-color-picker';
+
 @NgModule({
   imports: [
     CommonModule,
     StoresDashboardRoutingModule,
-    InputMaskModule,
-    CodeHighlighterModule,
     ImageUploadModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
@@ -70,43 +54,30 @@ import { ColorPickerModule } from 'ngx-color-picker';
     Md2Module,
     NoConflictStyleCompatibilityMode,
     CovalentDialogsModule,
-    MatAutocompleteModule,
     MatButtonModule,
-    MatButtonToggleModule,
     MatCardModule,
     MatCheckboxModule,
-    MatChipsModule,
-    MatDatepickerModule,
     MatDialogModule,
     MatExpansionModule,
-    MatGridListModule,
     MatIconModule,
     MatInputModule,
-    MatListModule,
     MatMenuModule,
     MatNativeDateModule,
-    MatPaginatorModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,
     MatRadioModule,
     MatRippleModule,
     MatSelectModule,
     MatSidenavModule,
-    MatSliderModule,
-    MatSlideToggleModule,
     MatSnackBarModule,
-    MatSortModule,
     MatTableModule,
-    MatTabsModule,
     MatToolbarModule,
-    MatTooltipModule,
-    MatStepperModule,
     FlexLayoutModule,
     CovalentDataTableModule,
     ColorPickerModule
   ],
   declarations: [StoresDashboardComponent, AddStoresComponent, EditStoresComponent, TimePickerDialogComponent, FeedbacksComponent],
-  providers: [StoresService, LocationService, ProductsService, NotificationsService, CrudService],
+  providers: [StoresService, LocationService, ProductsService, CrudService],
   exports: [TimePickerDialogComponent],
   entryComponents: [TimePickerDialogComponent]
 })

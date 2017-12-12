@@ -17,7 +17,7 @@ $ineed-primary: (
   700: #834ae6,
   800: #834ae6,
   900: #834ae6,
-  A100: #834ae6,
+  A100: #e6b6ff,
   A200: #834ae6,
   A400: #834ae6,
   A700: #834ae6,
@@ -39,7 +39,7 @@ $ineed-primary: (
   )
 );
 
-$primary: mat-palette($ineed-primary, 600);
+$primary: mat-palette($ineed-primary, 600, A100);
 $accent:  mat-palette($mat-orange, 600, A100, A400);
 
 $warn:    mat-palette($mat-red, 600);

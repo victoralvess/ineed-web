@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ProductsService } from '../services/products.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { SelectItem } from 'primeng/primeng';
 
 import { User } from 'firebase/app';
 import { Store } from '../../../models/store.model';
@@ -19,7 +18,7 @@ import { Commons } from '../../commons/commons';
 export class AddProductsComponent implements OnInit, OnDestroy {
 
     stores: Store[] = [];
-    categories: SelectItem[] = [];
+    categories: any[] = [];
 
     productsForm: FormGroup;
     user: User;
