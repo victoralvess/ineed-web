@@ -55,7 +55,7 @@ import { StoresService } from './services/stores.service';
 import { LocationService } from './services/location/location.service';
 import { TimePickerDialogComponent } from './time-picker-dialog/time-picker-dialog.component';
 import { FeedbacksComponent } from './feedbacks/feedbacks.component';
-import { ColorPickerModule } from 'narik-angular-color-picker';
+import { ColorPickerModule } from 'ngx-color-picker';
 @NgModule({
   imports: [
     CommonModule,
